@@ -1,0 +1,43 @@
+{
+  // ==== LaTeX Workshop Tools ====
+  "latex-workshop.latex.tools": [
+    {
+      "name": "platex",
+      "command": "platex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "dvipdfmx",
+      "command": "dvipdfmx",
+      "args": [
+        "-q",
+        "-o",
+        "%DIR%/%DOCFILE%.pdf",
+        "%DIR%/%DOCFILE%.dvi"
+      ]
+    }
+  ],
+
+  // ==== レシピ（実行順） ====
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "platex -> dvipdfmx",
+      "tools": [
+        "platex",
+        "platex",
+        "dvipdfmx"
+      ]
+    }
+  ],
+
+  // ==== 既定のレシピとして使用 ====
+  "latex-workshop.latex.recipe.default": "platex -> dvipdfmx",
+
+  // ==== 同期設定 ====
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.synctex.afterBuild.enabled": true
+}

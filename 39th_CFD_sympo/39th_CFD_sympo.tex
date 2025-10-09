@@ -1,0 +1,119 @@
+\documentclass[a4j]{jarticle}
+\usepackage{graphicx}
+\usepackage{jcfd39}
+\usepackage{url}
+%
+%\usepackage{ulem} %proofreading e.g. \uuline{ \uwave{  \sout{demo}}}
+%
+%\makeatletter  % Change the style of citation and biblabal - II
+%\def\@cite#1{$^{\mbox{\scriptsize{(#1})}}$}
+%\makeatother
+
+\newcommand{\ctext}[1]{\raise0.2ex\hbox{\textcircled{\scriptsize{#1}}}}
+
+
+%%\def\papernum{講演番号}                %講演番号を記して下さい
+
+\title{2次元直交格子を用いたshock-fitting法の基礎的研究}   %和文タイトルを記して下さい
+\etitle{Fundamental Study on the Shock-Fitting Method Using 2D Cartesian grid}   %英文タイトルを記して下さい
+                                    %和文著者名を記して下さい
+\author{\begin{tabular}{cl}
+$\bigcirc$ & 西尾朋人，東大, 
+             東京都文京区本郷7-3-1, 
+             E-mail：nishio-tomohito048@g.ecc.u-tokyo.ac.jp \\
+           & 今村太郎，東大,
+             東京都文京区本郷7-3-1, 
+             E-mail：imamura@g.ecc.u-tokyo.ac.jp
+\end{tabular} }
+
+                                    %英文著者名を記して下さい
+\eauthor{\begin{tabular}{l}
+    Tomohito NISHIO, 
+    The University of Tokyo, 
+    7-3-1 Hongo, Bunkyo-ku, Tokyo, Japan \\
+    Taro IMAMURA, 
+    The University of Tokyo, 
+    7-3-1 Hongo, Bunkyo-ku, Tokyo, Japan
+\end{tabular} }
+
+                                    %アブストラクトを記して下さい
+\abstract{%
+%
+    Abstract must be 100 -- 150 words using 9pt Times font.
+    This is a simple example of how to prepare the paper for CFD39.
+    The headings should appear as above.
+    The instruction is written in the main body.
+    Abstract must be 100 -- 150 words using 9pt Times font.
+    This is a simple example of how to prepare the paper for CFD39.
+    The headings should appear as above. The instruction is written in the main body. 
+%
+}
+\begin{document}
+\baselineskip=1zw
+\maketitle
+                                    %ここから本文です
+
+\section{序論} \label{sec:intro}
+
+\section{手法} \label{sec:method}
+\subsection{Shock-Capturing法 Euler方程式ソルバー} \label{subsec:sc}
+
+圧縮性Euler方程式を直交格子有限体積法（FVM）で解く.
+セル内物理量の再構築にはMUSCL法を用いる.
+物理量の勾配計算はWLSQ(G)法により行い, 制限関数としてVan Albada リミッターを用いる.
+近似RiemannソルバーとしてAUSM族 SLAUスキームを使用する.
+時間積分は陽解放の3次精度のTVD Runge-Kutta法で行う.
+CFL条件は各セルの幅$\Delta x$, $\Delta y$, 流体速度$u_{i,j}$, $v_{i,j}$, 音速$a_{i, j}$を用いて, 式~(\ref{eq:CFLcon})で定める。
+\begin{equation}
+    \Delta t =
+    \frac{\mathrm{CFL}}{
+        \max\left(
+            \frac{|u_{i,j}|}{\Delta x}
+            + \frac{|v_{i,j}|}{\Delta y}
+            + a_{i,j}
+              \sqrt{
+                \frac{1}{\Delta x^2}
+                + \frac{1}{\Delta y^2}
+              }
+        \right)
+    }
+    \label{eq:CFLcon}
+\end{equation}
+直交格子に沿わない物体境界での境界条件には, 埋め込み境界法(Immersed Boundary Method, IB法)を用いる.
+
+\subsection{不連続領域の判定・抽出} \label{subsec:discon}
+\subsubsection{圧縮性の顕著なセルの特定} \label{subsubsec:comp}
+セルごとの圧縮性の定量的な評価法として, 速度場の発散を用いる.
+SC法CFDの計算結果から, 各セルで速度の発散を計算し, その2乗平均平方根(RMS)を算出する.
+速度の発散がこのRMSより大きいセルを, 圧縮性が顕著なセルとし, 不連続領域と特定する.
+
+\subsubsection{Connected Component Labeling}\label{subsubsec:CCL}
+[\ref{subsubsec:comp}]で評価された圧縮性の顕著なセルは，数値的な速度発散に基づく定義であるため，物理的に意味のない領域（ノイズや離小島）を含む場合がある．
+これらの不要な領域を自動的に除去し, 物理的に意味のある高圧縮性領域のみを抽出するために, Connected Component Labeling（CCL）によるクラスタリング処理を適用する.
+[\ref{subsubsec:comp}]で評価された圧縮性の顕著なセルについて, 同様のセルを縦横斜め8近傍に持つ場合に, それらを同一グループとしてクラスタリングしていく.
+得られた各クラスターごとにそのサイズ（属するセル数）を計算し，計算領域の全セル数に対して一定割合未満の小さい連結グループをノイズとして除去対象とする．
+こうして，対象となる比較的大きなクラスターのみを残し，物理的に意味のある領域を選別可能とした．
+この処理にはPythonの数値処理ライブラリ \texttt{NumPy} および \texttt{SciPy} の \texttt{ndimage.label} 関数を用いる.
+
+\subsection{Shock-Fitting法}
+
+
+\section{結果}
+\subsection{1次元非定常垂直衝撃波}
+
+\subsection{2次元定常斜め衝撃波}
+
+\subsection{2次元定常角柱離脱衝撃波}
+
+\subsection{2次元定常円柱離脱衝撃波}
+
+\section{結論}
+
+\section*{参考文献}
+
+\begin{enumerate}
+    \item 荒川，谷口, ``論文の書式について,'' 第17回数値流体力学講演論文集, 1 (2003), pp. 1-1.
+    \item Arakawa, C. and Taniguchi, N., ``How to prepare the paper,'' Proc. 17th CFD Symp., 1 (2003), pp. 1-1.
+\end{enumerate}
+
+\end{document}
