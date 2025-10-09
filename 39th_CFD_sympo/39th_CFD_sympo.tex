@@ -56,7 +56,9 @@ $\bigcirc$ & 西尾朋人，東大,
 \section{序論} \label{sec:intro}
 
 \section{手法} \label{sec:method}
+\mbox{}\\[-5.0ex]
 \subsection{Shock-Capturing法 Euler方程式ソルバー} \label{subsec:sc}
+\mbox{}\\[-3.0ex]
 
 圧縮性Euler方程式を直交格子有限体積法（FVM）で解く.
 セル内物理量の再構築にはMUSCL法を用いる.
@@ -82,20 +84,88 @@ CFL条件は各セルの幅$\Delta x$, $\Delta y$, 流体速度$u_{i,j}$, $v_{i,
 直交格子に沿わない物体境界での境界条件には, 埋め込み境界法(Immersed Boundary Method, IB法)を用いる.
 
 \subsection{不連続領域の判定・抽出} \label{subsec:discon}
+\mbox{}\\[-7.0ex]
 \subsubsection{圧縮性の顕著なセルの特定} \label{subsubsec:comp}
+\mbox{}\\[-1.0ex]
+
 セルごとの圧縮性の定量的な評価法として, 速度場の発散を用いる.
 SC法CFDの計算結果から, 各セルで速度の発散を計算し, その2乗平均平方根(RMS)を算出する.
 速度の発散がこのRMSより大きいセルを, 圧縮性が顕著なセルとし, 不連続領域と特定する.
 
 \subsubsection{Connected Component Labeling}\label{subsubsec:CCL}
-[\ref{subsubsec:comp}]で評価された圧縮性の顕著なセルは，数値的な速度発散に基づく定義であるため，物理的に意味のない領域（ノイズや離小島）を含む場合がある．
+\mbox{}\\[-1.0ex]
+
+[\ref{subsubsec:comp}]で評価した圧縮性の顕著なセルは，数値的な速度発散に基づく定義であるため，物理的に意味のない領域（ノイズや離小島）を含む場合がある．
 これらの不要な領域を自動的に除去し, 物理的に意味のある高圧縮性領域のみを抽出するために, Connected Component Labeling（CCL）によるクラスタリング処理を適用する.
 [\ref{subsubsec:comp}]で評価された圧縮性の顕著なセルについて, 同様のセルを縦横斜め8近傍に持つ場合に, それらを同一グループとしてクラスタリングしていく.
 得られた各クラスターごとにそのサイズ（属するセル数）を計算し，計算領域の全セル数に対して一定割合未満の小さい連結グループをノイズとして除去対象とする．
 こうして，対象となる比較的大きなクラスターのみを残し，物理的に意味のある領域を選別可能とした．
 この処理にはPythonの数値処理ライブラリ \texttt{NumPy} および \texttt{SciPy} の \texttt{ndimage.label} 関数を用いる.
 
+\subsubsection{不連続領域のSkeleton化} \label{subsubsec:skeleton}
+\mbox{}\\[-1.0ex]
+
+\texttt{Python} の \texttt{skimage.morphology skeletonize} 関数を用いて, [\ref{subsubsec:CCL}]で得たクラスターの主要骨格をセル1ピクセル幅で取得する.
+この結果を\texttt{Python} の \texttt{networkx}を用いて処理する.
+本研究では干渉のない一つの衝撃波を扱うため, 主要骨格セルの中の最長経路を特定する.
+\texttt{networkx}は分岐や経路処理に強いため,
+今後衝撃波干渉や分岐などを扱うにあたっても, この手法は応用性が高いと考えた.
+
+\subsubsection{衝撃波面のSpline近似} \label{subsubsec:spline}
+\mbox{}\\[-1.0ex]
+
+[\ref{subsubsec:skeleton}]で得た不連続領域の最長骨格に対し, 
+\texttt{SciPy.interpolate} の \texttt{splprep, splev} 関数を用いてspline補完を行う.
+ここで, ユーザー任意のサンプリング点数のshock-pointsを任意の滑らかさで用意できる.
+
 \subsection{Shock-Fitting法}
+\mbox{}\\[-3.0ex]
+
+[\ref{subsec:sc}],[\ref{subsec:discon}]で, SC法CFDの計算結果と初期衝撃波位置, shock-pointsが用意される.
+ここで, 直交格子のセルは各1つの物理量を持つのに対し, shock-pointsは衝撃波直前と直後の2つの値を持つ.
+Shock-Fitiing法(SF法)では, はじめに不連続領域を除く衝撃波上流と下流で独立してSC法CFDを行い, タイムステップを$\Delta t$進める.
+次に, その情報をshock-pointsに外挿し, Rankine-Hugoniot条件を課すことで, shock-pointsでの上流・下流の2つの物理量とshock-pointsの速度が
+決定される. これにより, 不連続領域でもタイムステップを$\Delta t$進めることができる. この情報をフィードバックし, 再び不連続領域を除く衝撃波上流と下流で独立してSC法CFDを実行する.
+このプロセスの繰り返しにより, 直交格子のセルとshock-pointsでの物理量, shock-pointsの位置が時間発展する. 
+
+\subsubsection{衝撃波面と交差するBlanked cellsのラベリング} \label{subsubsec:exclude}
+\mbox{}\\[-1.0ex]
+
+
+\subsubsection{Adjoining Boundary cells, Surrogate Boundary cellsのラベリング} \label{subsubsec:boundary}
+\mbox{}\\[-1.0ex]
+
+
+\subsubsection{上流セル・下流セルの識別} \label{subsubsec:udflow}
+\mbox{}\\[-1.0ex]
+
+
+\subsubsection{不要なShock Nodesの除去} \label{subsubsec:remove}
+\mbox{}\\[-1.0ex]
+
+
+\subsubsection{SC法ソルバーによる計算領域でのCFDの実行} \label{subsubsec:sc}
+\mbox{}\\[-1.0ex]
+
+
+\subsubsection{衝撃波法線ベクトルの計算} \label{subsubsec:normal}
+\mbox{}\\[-1.0ex]
+
+
+\subsubsection{Surrogate Boundary cellsからShock Nodesへの値の外挿} \label{subsubsec:extrapolate}
+\mbox{}\\[-1.0ex]
+
+
+\subsubsection{Shock NodesでのRankine-Hugoniot条件の適用} \label{subsubsec:rankine}
+\mbox{}\\[-1.0ex]
+
+
+\subsubsection{時間積分によるShock Nodesの進行} \label{subsubsec:prop}
+\mbox{}\\[-1.0ex]
+
+
+\subsubsection{Shock NodesからAdjoining Boundary, Blanked cellsへの値の外挿} \label{subsubsec:adjoining}
+\mbox{}\\[-1.0ex]
 
 
 \section{結果}
