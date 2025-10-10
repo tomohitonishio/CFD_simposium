@@ -1,6 +1,8 @@
 \documentclass[a4j]{jarticle}
-\usepackage{graphicx}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{float}
 \usepackage{jcfd39}
+\usepackage{amsmath}
 \usepackage{url}
 %
 %\usepackage{ulem} %proofreading e.g. \uuline{ \uwave{  \sout{demo}}}
@@ -14,7 +16,7 @@
 
 %%\def\papernum{講演番号}                %講演番号を記して下さい
 
-\title{2次元直交格子を用いたshock-fitting法の基礎的研究}   %和文タイトルを記して下さい
+\title{2次元直交格子を用いたShock-Fitting法の基礎的研究}   %和文タイトルを記して下さい
 \etitle{Fundamental Study on the Shock-Fitting Method Using 2D Cartesian grid}   %英文タイトルを記して下さい
                                     %和文著者名を記して下さい
 \author{\begin{tabular}{cl}
@@ -56,15 +58,15 @@ $\bigcirc$ & 西尾朋人，東大,
 \section{序論} \label{sec:intro}
 
 \section{手法} \label{sec:method}
-\mbox{}\\[-5.0ex]
+
 \subsection{Shock-Capturing法 Euler方程式ソルバー} \label{subsec:sc}
 \mbox{}\\[-3.0ex]
 
 圧縮性Euler方程式を直交格子有限体積法（FVM）で解く.
-セル内物理量の再構築にはMUSCL法を用いる.
-物理量の勾配計算はWLSQ(G)法により行い, 制限関数としてVan Albada リミッターを用いる.
-近似RiemannソルバーとしてAUSM族 SLAUスキームを使用する.
-時間積分は陽解放の3次精度のTVD Runge-Kutta法で行う.
+状態変数の勾配計算はWeighted Least Square Quadrature(Gauss)(WLSQ(G),重み付き最小二乗法)をにより行い, セル内物理量の再構築には三次精度 Monotone Upstream-centered
+Schemes for Conservation Laws(MUSCL 法)を用いる。また. 制限関数としてVan Albada リミッターを採用する.
+近似RiemannソルバーとしてAUSM(Advection Upstream Splitting Method)族SLAU(Simple Low-dissipation AUSM)スキームを使用する。
+時間積分は陽解法の3次精度のTVD Runge-Kutta法で行う.
 CFL条件は各セルの幅$\Delta x$, $\Delta y$, 流体速度$u_{i,j}$, $v_{i,j}$, 音速$a_{i, j}$を用いて, 式~(\ref{eq:CFLcon})で定める。
 \begin{equation}
     \Delta t =
@@ -81,16 +83,17 @@ CFL条件は各セルの幅$\Delta x$, $\Delta y$, 流体速度$u_{i,j}$, $v_{i,
     }
     \label{eq:CFLcon}
 \end{equation}
-直交格子に沿わない物体境界での境界条件には, 埋め込み境界法(Immersed Boundary Method, IB法)を用いる.
+直交格子に沿わない物体境界での境界条件には, 埋め込み境界法$^{(\ref{ref:IBM})}$(Immersed Boundary Method, IB法)を用いる.
 
 \subsection{不連続領域の判定・抽出} \label{subsec:discon}
-\mbox{}\\[-7.0ex]
+\mbox{}\\[-6.0ex]
 \subsubsection{圧縮性の顕著なセルの特定} \label{subsubsec:comp}
 \mbox{}\\[-1.0ex]
 
-セルごとの圧縮性の定量的な評価法として, 速度場の発散を用いる.
-SC法CFDの計算結果から, 各セルで速度の発散を計算し, その2乗平均平方根(RMS)を算出する.
-速度の発散がこのRMSより大きいセルを, 圧縮性が顕著なセルとし, 不連続領域と特定する.
+セルごとの圧縮性の定量的な評価法$^{(\ref{ref:AMR})}$として, 速度場の発散を用いる.
+SC法CFDの計算結果から, 各セルで速度発散を計算し, その2乗平均平方根(RMS)を算出する.
+速度発散がこのRMSより大きいセルを, 圧縮性が顕著なセルとし, 不連続領域と特定する.
+Fig.\ref{fig:extract}-\textcircled{\scriptsize 1}は斜め衝撃波のSC法CFD結果から, 圧縮性の顕著なセル(白セル)を特定した例である.
 
 \subsubsection{Connected Component Labeling}\label{subsubsec:CCL}
 \mbox{}\\[-1.0ex]
@@ -98,8 +101,9 @@ SC法CFDの計算結果から, 各セルで速度の発散を計算し, その2�
 [\ref{subsubsec:comp}]で評価した圧縮性の顕著なセルは，数値的な速度発散に基づく定義であるため，物理的に意味のない領域（ノイズや離小島）を含む場合がある．
 これらの不要な領域を自動的に除去し, 物理的に意味のある高圧縮性領域のみを抽出するために, Connected Component Labeling（CCL）によるクラスタリング処理を適用する.
 [\ref{subsubsec:comp}]で評価された圧縮性の顕著なセルについて, 同様のセルを縦横斜め8近傍に持つ場合に, それらを同一グループとしてクラスタリングしていく.
-得られた各クラスターごとにそのサイズ（属するセル数）を計算し，計算領域の全セル数に対して一定割合未満の小さい連結グループをノイズとして除去対象とする．
-こうして，対象となる比較的大きなクラスターのみを残し，物理的に意味のある領域を選別可能とした．
+得られた各クラスターごとにそのサイズ（属するセル数）を計算し，計算領域に対して面積が一定割合未満の小さいクラスターをノイズとして除去対象とする．
+こうして，対象となる比較的大きなクラスターのみが残り，物理的に意味のある領域が選別可能となる．
+Fig.\ref{fig:extract}-\textcircled{\scriptsize 1}の楕円内にあるノイズが除去され, Fig.\ref{fig:extract}-\textcircled{\scriptsize 2}のように圧縮性の顕著なセルが整理される.
 この処理にはPythonの数値処理ライブラリ \texttt{NumPy} および \texttt{SciPy} の \texttt{ndimage.label} 関数を用いる.
 
 \subsubsection{不連続領域のSkeleton化} \label{subsubsec:skeleton}
@@ -107,9 +111,10 @@ SC法CFDの計算結果から, 各セルで速度の発散を計算し, その2�
 
 \texttt{Python} の \texttt{skimage.morphology skeletonize} 関数を用いて, [\ref{subsubsec:CCL}]で得たクラスターの主要骨格をセル1ピクセル幅で取得する.
 この結果を\texttt{Python} の \texttt{networkx}を用いて処理する.
-本研究では干渉のない一つの衝撃波を扱うため, 主要骨格セルの中の最長経路を特定する.
+本研究では干渉のない1本の衝撃波を扱うため, 主要骨格セルの中の最長経路を特定する.
+Fig.\ref{fig:extract}-\textcircled{\scriptsize 3}の赤線は不連続領域から抽出された最長主要骨格を示す.
 \texttt{networkx}は分岐や経路処理に強いため,
-今後衝撃波干渉や分岐などを扱うにあたっても, この手法は応用性が高いと考えた.
+今後衝撃波干渉や分岐$^{(\ref{ref:intera})}$などを扱うにあたっても, この手法は応用性が高いと考えた.
 
 \subsubsection{衝撃波面のSpline近似} \label{subsubsec:spline}
 \mbox{}\\[-1.0ex]
@@ -117,73 +122,180 @@ SC法CFDの計算結果から, 各セルで速度の発散を計算し, その2�
 [\ref{subsubsec:skeleton}]で得た不連続領域の最長骨格に対し, 
 \texttt{SciPy.interpolate} の \texttt{splprep, splev} 関数を用いてspline補完を行う.
 ここで, ユーザー任意のサンプリング点数のshock-pointsを任意の滑らかさで用意できる.
-
+Fig.\ref{fig:extract}-\textcircled{\scriptsize 4}の緑線は, Fig.\ref{fig:extract}-\textcircled{\scriptsize 3}の最長主要骨格(赤線)をspline近似して配置したshock-pointsを示す.
+\vskip\baselineskip
+\begin{figure}[H]
+    \vspace*{-5mm}
+    \begin{center}
+        \includegraphics[width=0.4\textwidth]{extract.pdf}
+    \end{center}
+    \caption{斜め衝撃波の衝撃波面抽出の例. \\
+             \textcircled{\scriptsize 1}SC法CFDの結果から速度発散を計算し圧縮性の顕著なセル(白セル)を特定[\ref{subsubsec:comp}]. \\
+             \textcircled{\scriptsize 2}CCLでノイズを除去[\ref{subsubsec:CCL}]. \textcircled{\scriptsize 1}の楕円内のノイズが除かれる. \\
+             \textcircled{\scriptsize 3}Skeleton化で主要骨格(赤線)を抽出[\ref{subsubsec:skeleton}]. \\
+             \textcircled{\scriptsize 4}Spline近似で滑らかな衝撃波面(緑線)を得る[\ref{subsubsec:spline}].}
+    \label{fig:extract}
+\end{figure}
 \subsection{Shock-Fitting法}
 \mbox{}\\[-3.0ex]
 
-[\ref{subsec:sc}],[\ref{subsec:discon}]で, SC法CFDの計算結果と初期衝撃波位置, shock-pointsが用意される.
+[\ref{subsec:sc}, \ref{subsec:discon}]で, SC法CFDの計算結果と初期衝撃波面位置のshock-pointsが用意される.
 ここで, 直交格子のセルは各1つの物理量を持つのに対し, shock-pointsは衝撃波直前と直後の2つの値を持つ.
-Shock-Fitiing法(SF法)では, はじめに不連続領域を除く衝撃波上流と下流で独立してSC法CFDを行い, タイムステップを$\Delta t$進める.
-次に, その情報をshock-pointsに外挿し, Rankine-Hugoniot条件を課すことで, shock-pointsでの上流・下流の2つの物理量とshock-pointsの速度が
-決定される. これにより, 不連続領域でもタイムステップを$\Delta t$進めることができる. この情報をフィードバックし, 再び不連続領域を除く衝撃波上流と下流で独立してSC法CFDを実行する.
-このプロセスの繰り返しにより, 直交格子のセルとshock-pointsでの物理量, shock-pointsの位置が時間発展する. 
+shock-fitiing法(SF法)では, はじめに不連続領域を除く衝撃波上流と下流で独立してSC法CFDを行い[\ref{subsubsec:sc}], タイムステップを$\Delta t$進める.
+次に, その情報をshock-pointsに外挿し[\ref{subsubsec:extrapolate}], Rankine-Hugoniot条件(R-H条件)を課すことで, shock-pointsでの上流・下流の2つの物理量とshock-pointsの速度が
+決定される[\ref{subsubsec:rankine}]. これにより, 不連続領域でもタイムステップを$\Delta t$進めることができる[\ref{subsubsec:prop}, \ref{subsubsec:adjoining}]. この情報をフィードバックし, 再び不連続領域を除く衝撃波上流と下流で独立してSC法CFDを実行する.
+このプロセスの繰り返しにより, 直交格子のセルとshock-pointsでの状態変数, shock-pointsの位置が時間発展する. 
 
-\subsubsection{衝撃波面と交差するBlanked cellsのラベリング} \label{subsubsec:exclude}
-\mbox{}\\[-1.0ex]
+以下にアルゴリズムの詳細を示す.
 
+\subsubsection{Blanked cells, Adjoining Boundary cells, Surrogate Boundary cellsのラベリング} \label{subsubsec:boundary}
+\mbox{}\\[1.0ex]
+背景の直交格子のセルで, shock-pointsを繋いだshock-edge(衝撃波面に相当)に横切られるものを,
+Blanked cellsと呼ぶ. 
+Blanked cellsに少なくとも一辺を接しているセルをAdjoining Boundary cellsと定義する.
+さらに, Adjoining Boundary cellsと少なくとも一辺または一つの頂点を共有するセルを
+Surrogate Boundary cellsと定義する.
 
-\subsubsection{Adjoining Boundary cells, Surrogate Boundary cellsのラベリング} \label{subsubsec:boundary}
-\mbox{}\\[-1.0ex]
+ただし, 以下の条件を満たすように微修正を行う.
+\begin{itemize}
+  \item[・]  全てのAdjoining Boundary cellsは, 少なくとも一辺をSurrogate Boundary cellsと共有する.
+  そうでないものは、Blanked cellsにする.
+  \item[・]  全てのSurrogate Boundary cellsは、上下または左右からAdjoining Boundary cellsやGhost cellsに挟まれない.
+  挟まれる場合, Adjoining Boundary cellsにする.
+\end{itemize}
 
+[\ref{subsubsec:sc}]で衝撃波上流領域と下流領域でSC法CFDを独立に実行する際, Adjoining Boundaryは境界条件を課すGhost cellsとして働く.
+Surrogate Boundary cellsは計算領域の境界を表す.
 
 \subsubsection{上流セル・下流セルの識別} \label{subsubsec:udflow}
 \mbox{}\\[-1.0ex]
 
+Adjoing Boundary cellsとSurrogate Boundary cellsが, それぞれ衝撃波の上流か下流どちらにあるかを判別する.
+はじめに, shock-edge法線とshock-edgeからの相対位置ベクトルの内積を取り, 内積値の符号の正負によって2グループに分ける.
+その2グループのセルにおける圧力値を衝撃波面を跨いで比較し, 圧力が高い方を衝撃波下流側と判定する.
 
-\subsubsection{不要なShock Nodesの除去} \label{subsubsec:remove}
+\subsubsection{不要なShock-Pointsの除去} \label{subsubsec:remove}
 \mbox{}\\[-1.0ex]
 
+shock-pointsの持つ上流値, 下流値は[\ref{subsubsec:adjoining}]でAdjoinind Boundaryに値を
+外挿する際に用いられる. そのため, どのAdjoing Boundary cellsからも近くないshock-pointsは全く不要であるので,
+あらかじめ取り除く.
 
 \subsubsection{SC法ソルバーによる計算領域でのCFDの実行} \label{subsubsec:sc}
 \mbox{}\\[-1.0ex]
+衝撃波上流領域と下流領域でSE法CFDを独立に実行する. SC法CFDで課した境界条件に加え, 衝撃波上流側Adjoining Boundaryと
+下流側Adjoining Boundaryに境界条件を課す.
+\begin{itemize}
+  \item[・]  衝撃波上流側Adjoining Boundary：対象Adjoining Boundary cellの縦横斜め8近傍でSurrogate Boundary cellsを探索する. 
+            そのセルでの速度方向が最も対象Adjoining Boundary cellに向いているSurrogate Boundary cellの値を, 対象Adjoining Boundary cellに複製する. 流出・流入境界条件(0次外挿)に相当する.
+  \item[・]  衝撃波下流側Adjoining Boundary：もともとセルの持っている値を保持する. この値は各タイムステップの
+            [\ref{subsubsec:adjoining}]のプロセスで更新される.
+\end{itemize}
 
+\subsubsection{Surrogate Boundary cellsからShock-Pointsへの値の外挿} \label{subsubsec:extrapolate}
+\mbox{}\\[-1.0ex]
+
+時間更新されたSurrogate Boundary cellsで状態変数の勾配をGreen-Gauss法により計算する$^{(\ref{ref:SF})}$.
+この結果を用いて, 各shock-pointに対し, 近傍のSurrogate Boundary cellから状態変数の値を1次外挿する$^{(\ref{ref:SF})}$.
+各shock-pointは上流値と下流値の二つの値を持つが,
+上流側のSurrogate Boundaryは超音速流出境界で上流方向に特性曲線が伝播しないため, 
+すべての状態変数を外挿する.
+
+一方で, 下流値については遅い音響波（slow acoustic wave）に対応するリーマン変数のみを外挿する.
+衝撃波下流領域から特性曲線に乗って衝撃波面に伝わる情報は, このひとつのみだからである.
+下流側から外挿するリーマン変数は次式で与えられる.
+
+\begin{equation}
+    R_d^{t+\Delta t} = \tilde{a}_d^{t+\Delta t} + \tilde{\mathbf{u}}_d^{t+\Delta t} \cdot \mathbf{n}
+    \label{eq:Riemann_down}
+\end{equation}
+
+ここで，$\tilde{a}_d^{t+\Delta t}$ および $\tilde{\mathbf{u}}_d^{t+\Delta t}$ は
+下流側Surrogate Boundaryから外挿された仮の音速および速度ベクトルであり, 
+$\mathbf{n}$ は衝撃波面の法線ベクトルである.
+CFD計算における風上差分の性質により,
+式(\ref{eq:Riemann_down})の左辺に相当するリーマン変数 $R_d^{t+\Delta t}$ は正しく時間発展している一方で,
+右辺の外挿量（チルダ付き）は近似値に過ぎない.
+これらの量は[\ref{subsubsec:rankine}]でR-H条件を課すことにより修正される.
 
 \subsubsection{衝撃波法線ベクトルの計算} \label{subsubsec:normal}
 \mbox{}\\[-1.0ex]
 
+各shock-pointにおいて, 衝撃波面法線ベクトルを計算する. このとき, 周辺のshock-pointsが"影響範囲$^{(\ref{ref:effdomain})}$"に含まれるかを判断し,
+風上2点分のshock-pointsの座標, または風上風下両側2点分の座標を用いて計算する$^{(\ref{ref:SF})}$.
+法線ベクトルは衝撃波上流方向を向くものを採用する.
 
-\subsubsection{Surrogate Boundary cellsからShock Nodesへの値の外挿} \label{subsubsec:extrapolate}
+\subsubsection{Shock-PointsでのRankine-Hugoniot条件の適用} \label{subsubsec:rankine}
 \mbox{}\\[-1.0ex]
 
+各shock-pointsにおいてR-H条件を適用する.
+求解対象となる変数は, 衝撃波下流側の密度$\rho_d$, 法線方向速度$u_n^d$, 接線方向速度$u_\tau^d$, 
+圧力$p_d$, およびshock-point速度$w_s$の計5変数である.これらに対して, 以下の5つの式が構成される.
 
-\subsubsection{Shock NodesでのRankine-Hugoniot条件の適用} \label{subsubsec:rankine}
-\mbox{}\\[-1.0ex]
-
+\begin{equation}\label{eq:R-H}
+\begin{aligned}
+ \rho_d (u_n^d - w_s) &= \rho_u (u_n^u - w_s) \\
+ \rho_d (u_n^d - w_s)^2 + p_d &= \rho_u (u_n^u - w_s)^2 + p_u \\
+ \frac{\gamma}{\gamma - 1} \frac{p_d}{\rho_d} + \frac{1}{2}(u_n^d - w_s)^2 &= \frac{\gamma}{\gamma - 1} \frac{p_u}{\rho_u} + \frac{1}{2}(u_n^u - w_s)^2\\
+ u_\tau^d &= u_\tau^u\\
+ a_d + \frac{\gamma - 1}{2} u_n^d &= R_d 
+\end{aligned}
+\end{equation}
+\vskip\baselineskip
+添字$u$と$d$はそれぞれ衝撃波の上流および下流側を意味し, $a_d$は下流側音速, 
+$R_d$は下流側の特性変数である. なお, 全ての物理量について上付添字$t+\Delta t$を省略している.
 
 \subsubsection{時間積分によるShock Nodesの進行} \label{subsubsec:prop}
 \mbox{}\\[-1.0ex]
 
+[\ref{subsubsec:rankine}]で得たshock-point速度$w_s$を使用し, shock-pointsの位置を更新する.
+非定常問題への対応や高次精度の要求を満たすため, 高次の陽的多段法である
+Adams-Bashforth法を用いる.
 
-\subsubsection{Shock NodesからAdjoining Boundary, Blanked cellsへの値の外挿} \label{subsubsec:adjoining}
+\subsubsection{Shock-PintsからAdjoining Boundary, Blanked cellsへの値の外挿} \label{subsubsec:adjoining}
 \mbox{}\\[-1.0ex]
 
+各shock-pointで, 状態変数の勾配を計算する.
+近傍のshock-point, Surrogate Boundary cellの状態変数値とその相対位置から, 
+状態変数場をshock-point周りに線形近似する$^{(\ref{ref:SF})}$.
+この際, 使用するshock-pointは[\ref{subsubsec:normal}]で考えた"影響範囲"をもとに選択する.
+求めた状態変数場から, Blanked cells, Adjoing Bondary cellsの位置での各状態変数値が得られる.
+
+以上のプロセスにより, 全てのセルの状態変数値, shock-pointsの持つ上流・下流値とその位置が時間更新される.
 
 \section{結果}
 \subsection{1次元非定常垂直衝撃波}
+一枚グラフ。各タイムステップでの位置と形状の比較
 
 \subsection{2次元定常斜め衝撃波}
+grid convergenceのグラフ、どこの部分で解析解と差があるかの比較グラフ
 
 \subsection{2次元定常角柱離脱衝撃波}
+未定
 
 \subsection{2次元定常円柱離脱衝撃波}
+未定
 
 \section{結論}
 
 \section*{参考文献}
 
 \begin{enumerate}
-    \item 荒川，谷口, ``論文の書式について,'' 第17回数値流体力学講演論文集, 1 (2003), pp. 1-1.
-    \item Arakawa, C. and Taniguchi, N., ``How to prepare the paper,'' Proc. 17th CFD Symp., 1 (2003), pp. 1-1.
-\end{enumerate}
+    \item Assonitis, A., Paciorri, R., Ciallella, M., Ricchiuto, M. and Bonfiglioli, A., ``Extrapolated Shock Fitting for Two-Dimensional Flows on Structured Grids,''
+     AIAA J., Vol. 60, No. 11 (2022), pp. 6301-6312.
+\label{ref:SF}
+    \item Yoshiharu, T., Motoshi, H. and Taro, I., ``Near-Wall Modification of Spalart–Allmaras Turbulence Model for Immersed Boundary Method,''
+     AIAA J., Vol. 55, No. 9 (2017), pp. 3027-3039.
+\label{ref:IBM}
+    \item De Zeeuw, D. and Powell, K. G., ``Euler Calculations of Axisymmetric Under-Expanded Jets by an Adaptive-Refinement Method,''
+     30th Aerospace Sciences Meeting \& Exhibit, Paper 92-0321 (1992), pp. 1-13. 
+\label{ref:AMR}
+    \item Paciorri, R. and Bonfiglioli, A., ``Accurate detection of shock waves and shock interactions in two-dimensional shock-capturing solutions,''
+     Journal of Computational Physics, Vol. 406 (2020), pp. 109196.
+\label{ref:intera}
+     \item Paciorri, R. and Bonfiglioli, A., ``A shock-fitting technique for 2D unstructured grids,''
+      Computers \& Fluids, Vol. 38 (2009), pp. 715-726.
+\label{ref:effdomain}
+    \end{enumerate}
 
 \end{document}

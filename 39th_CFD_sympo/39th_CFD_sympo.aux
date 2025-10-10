@@ -16,31 +16,38 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}不連続領域のSkeleton化}{1}{}\protected@file@percent }
 \newlabel{subsubsec:spline}{{2.2.4}{1}{}{subsubsection.2.2.4}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.4}衝撃波面のSpline近似}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Shock-Fitting法}{1}{}\protected@file@percent }
-\newlabel{subsubsec:exclude}{{2.3.1}{1}{}{subsubsection.2.3.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.1}衝撃波面と交差するBlanked cellsのラベリング}{1}{}\protected@file@percent }
-\newlabel{subsubsec:boundary}{{2.3.2}{1}{}{subsubsection.2.3.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.2}Adjoining Boundary cells, Surrogate Boundary cellsのラベリング}{1}{}\protected@file@percent }
-\newlabel{subsubsec:udflow}{{2.3.3}{1}{}{subsubsection.2.3.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.3}上流セル・下流セルの識別}{1}{}\protected@file@percent }
-\newlabel{subsubsec:remove}{{2.3.4}{1}{}{subsubsection.2.3.4}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.4}不要なShock Nodesの除去}{1}{}\protected@file@percent }
-\newlabel{subsubsec:sc}{{2.3.5}{1}{}{subsubsection.2.3.5}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.5}SC法ソルバーによる計算領域でのCFDの実行}{1}{}\protected@file@percent }
-\newlabel{subsubsec:normal}{{2.3.6}{1}{}{subsubsection.2.3.6}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.6}衝撃波法線ベクトルの計算}{1}{}\protected@file@percent }
-\newlabel{subsubsec:extrapolate}{{2.3.7}{2}{}{subsubsection.2.3.7}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.7}Surrogate Boundary cellsからShock Nodesへの値の外挿}{2}{}\protected@file@percent }
-\newlabel{subsubsec:rankine}{{2.3.8}{2}{}{subsubsection.2.3.8}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.8}Shock NodesでのRankine-Hugoniot条件の適用}{2}{}\protected@file@percent }
-\newlabel{subsubsec:prop}{{2.3.9}{2}{}{subsubsection.2.3.9}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.9}時間積分によるShock Nodesの進行}{2}{}\protected@file@percent }
-\newlabel{subsubsec:adjoining}{{2.3.10}{2}{}{subsubsection.2.3.10}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.10}Shock NodesからAdjoining Boundary, Blanked cellsへの値の外挿}{2}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.}結果}{2}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}1次元非定常垂直衝撃波}{2}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}2次元定常斜め衝撃波}{2}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}2次元定常角柱離脱衝撃波}{2}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}2次元定常円柱離脱衝撃波}{2}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.}結論}{2}{}\protected@file@percent }
-\gdef \@abspage@last{2}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces 斜め衝撃波の衝撃波面抽出の例. \\ \textcircled {\relax \fontsize  {6}{7pt}\selectfont  1}SC法CFDの結果から速度発散を計算し圧縮性の顕著なセル(白セル)を特定[\ref {subsubsec:comp}]. \\ \textcircled {\relax \fontsize  {6}{7pt}\selectfont  2}CCLでノイズを除去[\ref {subsubsec:CCL}]. \textcircled {\relax \fontsize  {6}{7pt}\selectfont  1}の楕円内のノイズが除かれる. \\ \textcircled {\relax \fontsize  {6}{7pt}\selectfont  3}Skeleton化で主要骨格(赤線)を抽出[\ref {subsubsec:skeleton}]. \\ \textcircled {\relax \fontsize  {6}{7pt}\selectfont  4}Spline近似で滑らかな衝撃波面(緑線)を得る[\ref {subsubsec:spline}].}}{2}{}\protected@file@percent }
+\newlabel{fig:extract}{{1}{2}{}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Shock-Fitting法}{2}{}\protected@file@percent }
+\newlabel{subsubsec:boundary}{{2.3.1}{2}{}{subsubsection.2.3.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.1}Blanked cells, Adjoining Boundary cells, Surrogate Boundary cellsのラベリング}{2}{}\protected@file@percent }
+\newlabel{subsubsec:udflow}{{2.3.2}{2}{}{subsubsection.2.3.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.2}上流セル・下流セルの識別}{2}{}\protected@file@percent }
+\newlabel{subsubsec:remove}{{2.3.3}{2}{}{subsubsection.2.3.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.3}不要なShock-Pointsの除去}{2}{}\protected@file@percent }
+\newlabel{subsubsec:sc}{{2.3.4}{2}{}{subsubsection.2.3.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.4}SC法ソルバーによる計算領域でのCFDの実行}{2}{}\protected@file@percent }
+\newlabel{subsubsec:extrapolate}{{2.3.5}{2}{}{subsubsection.2.3.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.5}Surrogate Boundary cellsからShock-Pointsへの値の外挿}{2}{}\protected@file@percent }
+\newlabel{eq:Riemann_down}{{2}{2}{}{equation.2}{}}
+\newlabel{subsubsec:normal}{{2.3.6}{3}{}{subsubsection.2.3.6}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.6}衝撃波法線ベクトルの計算}{3}{}\protected@file@percent }
+\newlabel{subsubsec:rankine}{{2.3.7}{3}{}{subsubsection.2.3.7}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.7}Shock-PointsでのRankine-Hugoniot条件の適用}{3}{}\protected@file@percent }
+\newlabel{eq:R-H}{{3}{3}{}{equation.3}{}}
+\newlabel{subsubsec:prop}{{2.3.8}{3}{}{subsubsection.2.3.8}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.8}時間積分によるShock Nodesの進行}{3}{}\protected@file@percent }
+\newlabel{subsubsec:adjoining}{{2.3.9}{3}{}{subsubsection.2.3.9}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.9}Shock-PintsからAdjoining Boundary, Blanked cellsへの値の外挿}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.}結果}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}1次元非定常垂直衝撃波}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}2次元定常斜め衝撃波}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}2次元定常角柱離脱衝撃波}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}2次元定常円柱離脱衝撃波}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.}結論}{3}{}\protected@file@percent }
+\newlabel{ref:SF}{{1}{3}{}{enumi.1}{}}
+\newlabel{ref:IBM}{{2}{3}{}{enumi.2}{}}
+\newlabel{ref:AMR}{{3}{3}{}{enumi.3}{}}
+\newlabel{ref:intera}{{4}{3}{}{enumi.4}{}}
+\newlabel{ref:effdomain}{{5}{3}{}{enumi.5}{}}
+\gdef \@abspage@last{3}
