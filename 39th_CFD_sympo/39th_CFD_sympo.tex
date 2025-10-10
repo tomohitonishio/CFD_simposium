@@ -56,6 +56,34 @@ $\bigcirc$ & 西尾朋人，東大,
                                     %ここから本文です
 
 \section{序論} \label{sec:intro}
+\mbox{}\\[-3.0ex]
+
+超音速流れの数値流体計算(Computational Fluid Dynamics, CFD)において, 衝撃波の取扱いは計算精度・収束性・安定性に大きな影響を及ぼす.
+従来広く用いられてきた shock-capturing法(SC法)は, 全ての流体セルを同一のアルゴリズムで扱うため, 構造が単純で汎用性が高い. 
+その一方で, 衝撃波の不連続性が人工粘性によって平滑化されるため, 
+数値振動の発生や衝撃波後流での計算精度の低下, さらには衝撃波位置の不明確さが課題となる.
+
+shock-fitting法(SF法)は, 背景格子形状に依らず衝撃波形状を明示的に追跡し, 
+その運動および上下流の状態をRankine-Hugoniot条件に基づいて求める.
+この方法では衝撃波をゼロ厚さの面として扱うため, SC法に内在する数値拡散を完全に除去でき, 
+比較的粗い格子でも高精度な結果を得ることができる. 
+しかしながら, 衝撃波形状の動的追跡や, 差分計算が不連続をまたがないようにスキームを修正する必要があるため, 
+実装は非常に複雑である.
+
+近年では, 非構造格子のSF法であるeDIT法$^{(\ref{ref:eDIT})}$(extrapolated Discontinuity Tracking法) や, 
+それを構造格子系に拡張した Structured Extrapolated Shock-Fitting法$^{(\ref{ref:SESF})}$(SESF法) が開発されている.
+これらの手法は, 衝撃波面周りでリメッシングを行わないため,  
+多種の既存のCFDソルバへの適用が容易になり, 実用的なSF法の実装が進展している.
+
+本研究では, このSF法の効果の実証と手法の改良を目的として, 多様な形状への適用と実装の比較的容易な直交格子上に手法を実装し, 
+基礎的なベンチマーク問題を解析する.
+[\ref{subsec:1D}]では1次元非定常衝撃波を扱い, SF法の基本的な挙動と精度, 非定常問題への追従性を確認する.
+[\ref{subsec:2Ddiag}]では2次元定常斜め衝撃波を扱い, SC法CFD結果, 解析解との比較により格子収束性を評価する.
+[\ref{subsec:2Dsq}]では, 流れ場の状態変数分布に非一様性があり, 衝撃波面が曲率を持つ2次元定常角柱離脱衝撃波を解析する.
+[\ref{subsec:2Dcirc}]では, 埋め込み境界法$^{(\ref{ref:IBM})}$(Immersed Boundary Method, IB法)を用いて円柱離脱衝撃波を解き,
+直交格子ソルバーとの組み合わせの有効性を確認する.
+また, SC法CFDの結果から不連続領域を自動抽出し, 衝撃波面を配置してSF法へ接続する処理の自動化を行うことで, 
+SC法とSF法を統合した一連の計算手順を構築する.
 
 \section{手法} \label{sec:method}
 
@@ -127,7 +155,7 @@ Fig.\ref{fig:extract}-\textcircled{\scriptsize 4}の緑線は, Fig.\ref{fig:extr
 \begin{figure}[H]
     \vspace*{-5mm}
     \begin{center}
-        \includegraphics[width=0.4\textwidth]{extract.pdf}
+        \includegraphics[width=0.45\textwidth]{extract.pdf}
     \end{center}
     \caption{斜め衝撃波の衝撃波面抽出の例. \\
              \textcircled{\scriptsize 1}SC法CFDの結果から速度発散を計算し圧縮性の顕著なセル(白セル)を特定[\ref{subsubsec:comp}]. \\
@@ -163,6 +191,21 @@ Surrogate Boundary cellsと定義する.
   \item[・]  全てのSurrogate Boundary cellsは、上下または左右からAdjoining Boundary cellsやGhost cellsに挟まれない.
   挟まれる場合, Adjoining Boundary cellsにする.
 \end{itemize}
+Fig.\ref{fig:grouping}は斜め衝撃波の衝撃波面の周囲で, 実際にラベリングを行った例である.
+衝撃波面がBlanked cellsに覆われ, さらにそれがAdjoining Boundary, Surrogate Boundary
+に囲まれている.
+
+\vskip\baselineskip
+\begin{figure}[H]
+    \vspace*{-5mm}
+    \begin{center}
+        \includegraphics[width=0.45\textwidth]{grouping.pdf}
+    \end{center}
+    \caption{shock-fitting法におけるセルのグルーピングの例.
+    衝撃波面に横切られるセルをBlanked cells, その1層外側がAdjoining Boundary, さらに1層外側が
+    Surrogate Boundary. さらに[\ref{subsubsec:boundary}]の諸条件を満たすよう修正する.}
+    \label{fig:grouping}
+\end{figure}
 
 [\ref{subsubsec:sc}]で衝撃波上流領域と下流領域でSC法CFDを独立に実行する際, Adjoining Boundaryは境界条件を課すGhost cellsとして働く.
 Surrogate Boundary cellsは計算領域の境界を表す.
@@ -171,15 +214,30 @@ Surrogate Boundary cellsは計算領域の境界を表す.
 \mbox{}\\[-1.0ex]
 
 Adjoing Boundary cellsとSurrogate Boundary cellsが, それぞれ衝撃波の上流か下流どちらにあるかを判別する.
-はじめに, shock-edge法線とshock-edgeからの相対位置ベクトルの内積を取り, 内積値の符号の正負によって2グループに分ける.
+最初のタイムステップでは, shock-edge法線と最近傍shock-pointからの相対位置ベクトルの内積を取り, 内積値の符号の正負によって2グループに分ける.
+Fig.\ref{fig:updownjudge}では, 左上のセルは内積が正, 右下のセルは負であるので, この２つのセルは一方が衝撃波上流側, もう一方が下流側と判別できる.
 その2グループのセルにおける圧力値を衝撃波面を跨いで比較し, 圧力が高い方を衝撃波下流側と判定する.
 
-\subsubsection{不要なShock-Pointsの除去} \label{subsubsec:remove}
+次回以降のステップでは, [\ref{subsubsec:normal}]で法線方向を衝撃波上流方向に限定しているため, 
+内積値の符号のみで上流・下流の識別が可能である.
+
+\vskip\baselineskip
+\begin{figure}[H]
+    \vspace*{-5mm}
+    \begin{center}
+        \includegraphics[width=0.45\textwidth]{updownjudge.pdf}
+    \end{center}
+    \caption{上流・下流判定対象セルに対し, 最近傍shock-pointからの相対位置ベクトル(黒)と衝撃波法線(緑)の内積を取る.
+    左上のセルは内積が正, 右下のセルは負である.  一方が衝撃波上流側, もう一方が下流側と判別できるので, 圧力値を比較し高いほうが下流側である.}
+    \label{fig:updownjudge}
+\end{figure}
+
+\subsubsection{} \label{subsubsec:remove}
 \mbox{}\\[-1.0ex]
 
 shock-pointsの持つ上流値, 下流値は[\ref{subsubsec:adjoining}]でAdjoinind Boundaryに値を
-外挿する際に用いられる. そのため, どのAdjoing Boundary cellsからも近くないshock-pointsは全く不要であるので,
-あらかじめ取り除く.
+外挿する際に用いられる. そのため, どのAdjoing Boundary cellsからも近くなく, 外挿時に参照されないshock-pointsは全く不要であるので,
+あらかじめ取り除く. この操作は最初のタイムステップのみ行う.
 
 \subsubsection{SC法ソルバーによる計算領域でのCFDの実行} \label{subsubsec:sc}
 \mbox{}\\[-1.0ex]
@@ -264,16 +322,24 @@ Adams-Bashforth法を用いる.
 以上のプロセスにより, 全てのセルの状態変数値, shock-pointsの持つ上流・下流値とその位置が時間更新される.
 
 \section{結果}
-\subsection{1次元非定常垂直衝撃波}
+\subsection{1次元非定常垂直衝撃波}\label{subsec:1D}
+\mbox{}\\[-3.0ex]
+
 一枚グラフ。各タイムステップでの位置と形状の比較
 
-\subsection{2次元定常斜め衝撃波}
+\subsection{2次元定常斜め衝撃波}\label{subsec:2Ddiag}
+\mbox{}\\[-3.0ex]
+
 grid convergenceのグラフ、どこの部分で解析解と差があるかの比較グラフ
 
-\subsection{2次元定常角柱離脱衝撃波}
+\subsection{2次元定常角柱離脱衝撃波}\label{subsec:2Dsq}
+\mbox{}\\[-3.0ex]
+
 未定
 
-\subsection{2次元定常円柱離脱衝撃波}
+\subsection{2次元定常円柱離脱衝撃波}\label{subsec:2Dcirc}
+\mbox{}\\[-3.0ex]
+
 未定
 
 \section{結論}
@@ -281,6 +347,12 @@ grid convergenceのグラフ、どこの部分で解析解と差があるかの�
 \section*{参考文献}
 
 \begin{enumerate}
+    \item Ciallella, M., Ricchiuto, M., Paciorri, R. and Bonfiglioli, A., ``Extrapolated Discontinuity Tracking for complex 2D shock interactions,''
+     Computers \& Fluids, Vol. 391 (2022), pp. 114543.
+\label{ref:eDIT}
+    \item Assonitis, A., Ciallella, M., Paciorri, R., Ricchiuto, M. and Bonfiglioli, A., ``A new shock-fitting technique for 2-D structured grids,''
+     AIAA SCITECH 2022 Forum, Paper 2022-2008 (2022).
+\label{ref:SESF}
     \item Assonitis, A., Paciorri, R., Ciallella, M., Ricchiuto, M. and Bonfiglioli, A., ``Extrapolated Shock Fitting for Two-Dimensional Flows on Structured Grids,''
      AIAA J., Vol. 60, No. 11 (2022), pp. 6301-6312.
 \label{ref:SF}
