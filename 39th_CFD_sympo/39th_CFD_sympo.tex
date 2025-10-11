@@ -310,14 +310,14 @@ $R_d$は下流側の特性変数である. なお, 全ての物理量につい�
 非定常問題への対応や高次精度の要求を満たすため, 高次の陽的多段法である
 Adams-Bashforth法を用いる.
 
-\subsubsection{Shock-PintsからAdjoining Boundary, Blanked cellsへの値の外挿} \label{subsubsec:adjoining}
+\subsubsection{Shock-Pintsから下流Adjoining Boundary, Blanked cellsへの値の外挿} \label{subsubsec:adjoining}
 \mbox{}\\[-1.0ex]
 
 各shock-pointで, 状態変数の勾配を計算する.
-近傍のshock-point, Surrogate Boundary cellの状態変数値とその相対位置から, 
+近傍のshock-point, 下流Surrogate Boundary cellの状態変数値とその相対位置から, 
 状態変数場をshock-point周りに線形近似する$^{(\ref{ref:SF})}$.
 この際, 使用するshock-pointは[\ref{subsubsec:normal}]で考えた"影響範囲"をもとに選択する.
-求めた状態変数場から, Blanked cells, Adjoing Bondary cellsの位置での各状態変数値が得られる.
+求めた状態変数場から, Blanked cells, 下流Adjoing Bondary cellsの位置での各状態変数値が得られる.
 
 以上のプロセスにより, 全てのセルの状態変数値, shock-pointsの持つ上流・下流値とその位置が時間更新される.
 
@@ -325,7 +325,42 @@ Adams-Bashforth法を用いる.
 \subsection{1次元非定常垂直衝撃波}\label{subsec:1D}
 \mbox{}\\[-3.0ex]
 
-一枚グラフ。各タイムステップでの位置と形状の比較
+最も単純な1次元非定常垂直衝撃波を扱い, SF法の基本的な挙動と精度, 非定常問題への追従性を確認する.
+Fig.\ref{fig:1Dsituation}に計算領域・設定の概略を示す.
+衝撃波は最初に$x=0.5$に存在し, 速度$w=-0.2$で移動する.
+上流・下流の状態変数はこの条件を成立させるよう, あらかじめR-H条件を解いて与える.
+SC法の計算では, x軸方向に50セルの直交格子を用いる.
+1タイムステップの時間幅は, CFL条件を満たす固定値として設定し, $\Delta t = 0.001$とする.
+\begin{figure}[H]
+    \vspace*{-5mm}
+    \begin{center}
+        \includegraphics[width=0.4\textwidth]{1Dsituation.pdf}
+    \end{center}
+    \caption{1次元非定常垂直衝撃波の計算領域・設定の概略.
+    衝撃波は最初に$x=0.5$に存在し, 速度$w=-0.2$で移動する.}
+    \label{fig:1Dsituation}
+\end{figure}
+SF法による計算の結果, 衝撃波速さは常に0.20000000298023216という値となった.
+理論解との差は, [\ref{subsubsec:rankine}]でのニュートンラプソン法実行時の収束閾値が由来であった. 
+残差は倍精度の機械イプシロンまで収束していた. また, 流れ場は常に理論解と一致した.
+
+Fig.\ref{fig:1Dscsf}上図は, SC法CFDの結果(青)とSF法の結果(赤)を密度について比較している(1500step, t=1.5).
+SC法CFDでは, 衝撃波が人工粘性により平滑化され, 衝撃波位置が不明確である.
+また, SC法の結果は衝撃波上流側では理論解と完全に一致するが, 衝撃波下流域では
+数値振動が発生し理論解と差を生じる.
+Fig.\ref{fig:1Dscsf}下図は, 衝撃波下流域の密度分布について, SC法CFDの結果と理論解との差を示している.
+衝撃波前後の密度変化の0.1\%程度の振幅の数値振動が確認できる.
+\vskip\baselineskip
+\begin{figure}[H]
+    \vspace*{-5mm}
+    \begin{center}
+        \includegraphics[width=0.45\textwidth]{1Dscsf.pdf}
+    \end{center}
+    \caption{上：1次元非定常垂直衝撃波のSC法CFDの結果(青)とSF法の結果(赤)を密度について比較(1500step, t=1.5).\\
+    下：衝撃波下流域密度分布の, SC法CFDの結果と理論解との差.
+    }
+    \label{fig:1Dscsf}
+\end{figure}
 
 \subsection{2次元定常斜め衝撃波}\label{subsec:2Ddiag}
 \mbox{}\\[-3.0ex]
