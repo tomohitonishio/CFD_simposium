@@ -78,7 +78,7 @@ shock-fitting法(SF法)は, 背景格子形状に依らず衝撃波形状を明�
 本研究では, このSF法の効果の実証と手法の改良を目的として, 多様な形状への適用と実装の比較的容易な直交格子上に手法を実装し, 
 基礎的なベンチマーク問題を解析する.
 [\ref{subsec:1D}]では1次元非定常衝撃波を扱い, SF法の基本的な挙動と精度, 非定常問題への追従性を確認する.
-[\ref{subsec:2Ddiag}]では2次元定常斜め衝撃波を扱い, SC法CFD結果, 解析解との比較により格子収束性を評価する.
+[\ref{subsec:2Ddiag}]では2次元定常斜め衝撃波を扱い, SC法CFD結果, 解析解との比較により数値振動への耐性を評価する.
 [\ref{subsec:2Dsq}]では, 流れ場の状態変数分布に非一様性があり, 衝撃波面が曲率を持つ2次元定常角柱離脱衝撃波を解析する.
 [\ref{subsec:2Dcirc}]では, 埋め込み境界法$^{(\ref{ref:IBM})}$(Immersed Boundary Method, IB法)を用いて円柱離脱衝撃波を解き,
 直交格子ソルバーとの組み合わせの有効性を確認する.
@@ -349,7 +349,7 @@ SC法CFDでは, 衝撃波が人工粘性により平滑化され, 衝撃波位�
 また, SC法の結果は衝撃波上流側では理論解と完全に一致するが, 衝撃波下流域では
 数値振動が発生し理論解と差を生じる.
 Fig.\ref{fig:1Dscsf}下図は, 衝撃波下流域の密度分布について, SC法CFDの結果と理論解との差を示している.
-衝撃波前後の密度変化の0.1\%程度の振幅の数値振動が確認できる.
+衝撃波前後の密度変化の0.1\%程度の振幅の数値的減衰振動が確認できる.
 \vskip\baselineskip
 \begin{figure}[H]
     \vspace*{-5mm}
@@ -365,12 +365,63 @@ Fig.\ref{fig:1Dscsf}下図は, 衝撃波下流域の密度分布について, SC
 \subsection{2次元定常斜め衝撃波}\label{subsec:2Ddiag}
 \mbox{}\\[-3.0ex]
 
-grid convergenceのグラフ、どこの部分で解析解と差があるかの比較グラフ
+2次元定常斜め衝撃波を扱い, 衝撃波面が背景格子に沿わない2次元流れでのSF法の挙動と精度を確認する.
+Fig.\ref{fig:2Ddiagsituation}に計算領域・設定の概略を示す.
+計算領域左端から, マッハ数$M_\infty=2.5$, 角度$\theta=15^\circ$の均一流を流入する.
+下端は滑り壁条件である. SC法CFDで1000step計算した後, [\ref{subsec:discon}]のプロセスで衝撃波面を抽出し, SC法, SF法でそれぞれ保存量の残差が$10^{-14}$を下回るまで
+計算を継続する.
+\vskip\baselineskip
+\begin{figure}[H]
+    \vspace*{-5mm}
+    \begin{center}
+        \includegraphics[width=0.45\textwidth]{2Ddiagsituation.pdf}
+    \end{center}
+    \caption{2次元定常斜め衝撃波の計算領域・設定の概略.
+    計算領域左端から, マッハ数$M_\infty=2.5$, 角度$\theta=15^\circ$の均一流を流入する.
+    下端は滑り壁条件.}
+    \label{fig:2Ddiagsituation}
+\end{figure}
+
+SC法CFD, SF法での計算結果を解析解と比較する.
+衝撃波の不連続が存在する領域は, SC法CFDでは正確に表現できないことが明らかであるため,
+圧縮性が顕著なセル([\ref{subsubsec:comp}])を除いた計算領域で比較を行う.
+Fig.\ref{fig:2Ddiagcomp}上は, SC法CFDの密度分布と解析解の差を示す.
+衝撃波後流域に数値的減衰振動が発生していることが確認できる.
+誤差は, 衝撃波前後の密度変化の約10\%のオーダーに達している.
+衝撃波面から離れるに従い, 誤差が減少することもわかる.
+一方, Fig.\ref{fig:2Ddiagcomp}下は, SF法の密度分布と解析解の差を示す.
+誤差は衝撃波前後の密度変化の$10^{-10}$のオーダーに抑えられており, 数値振動は見られない.
+
+\vskip\baselineskip
+\begin{figure}[H]
+    \vspace*{-5mm}
+    \begin{center}
+        \includegraphics[width=0.45\textwidth]{2Ddiagcomp.pdf}
+    \end{center}
+    \caption{2次元定常斜め衝撃波のSC法, SF法計算結果(密度分布)の解析解との差分. 空白セルは不連続領域. \\
+    上：SC法CFDと解析解の差分.衝撃波後流域に数値振動が発生している. \\
+    下：SF法と解析解の差分. 数値振動は見られない.}
+    \label{fig:2Ddiagcomp}
+\end{figure}
 
 \subsection{2次元定常角柱離脱衝撃波}\label{subsec:2Dsq}
 \mbox{}\\[-3.0ex]
 
-未定
+2次元定常角柱離脱衝撃波を解析し, 流れ場の状態変数分布に非一様性があり, 衝撃波面が曲率を持つ場合のSF法の挙動を確認する.
+Fig.\ref{fig:2Dcolumnsitu}に計算領域・設定の概略を示す.
+計算領域左端から, マッハ数$M_\infty=4.0$の一様流を流入する.
+角柱表面は滑り壁条件を貸す. 
+\vskip\baselineskip
+\begin{figure}[H]
+    \vspace*{-5mm}
+    \begin{center}
+        \includegraphics[width=0.45\textwidth]{2Dcolumnsitu.pdf}
+    \end{center}
+    \caption{2次元定常角柱離脱衝撃波の計算領域・設定の概略.
+    計算領域左端から, マッハ数$M_\infty=4.0$の一様流を流入する.
+    角柱表面は滑り壁条件.}
+    \label{fig:2Dcolumnsitu}
+\end{figure}
 
 \subsection{2次元定常円柱離脱衝撃波}\label{subsec:2Dcirc}
 \mbox{}\\[-3.0ex]
