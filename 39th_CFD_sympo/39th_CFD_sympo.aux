@@ -16,23 +16,23 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}不連続領域のSkeleton化}{2}{}\protected@file@percent }
 \newlabel{subsubsec:spline}{{2.2.4}{2}{}{subsubsection.2.2.4}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.4}衝撃波面のSpline近似}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Shock-Fitting法}{2}{}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces 斜め衝撃波の衝撃波面抽出の例. \\ \textcircled {\relax \fontsize  {6}{7pt}\selectfont  1}SC法CFDの結果から速度発散を計算し圧縮性の顕著なセル(白セル)を特定[\ref {subsubsec:comp}]. \\ \textcircled {\relax \fontsize  {6}{7pt}\selectfont  2}CCLでノイズを除去[\ref {subsubsec:CCL}]. \textcircled {\relax \fontsize  {6}{7pt}\selectfont  1}の楕円内のノイズが除かれる. \\ \textcircled {\relax \fontsize  {6}{7pt}\selectfont  3}Skeleton化で主要骨格(赤線)を抽出[\ref {subsubsec:skeleton}]. \\ \textcircled {\relax \fontsize  {6}{7pt}\selectfont  4}Spline近似で滑らかな衝撃波面(緑線)を得る[\ref {subsubsec:spline}].}}{2}{}\protected@file@percent }
 \newlabel{fig:extract}{{1}{2}{}{figure.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Shock-Fitting法}{2}{}\protected@file@percent }
 \newlabel{subsubsec:boundary}{{2.3.1}{2}{}{subsubsection.2.3.1}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.1}Blanked cells, Adjoining Boundary cells, Surrogate Boundary cellsのラベリング}{2}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces shock-fitting法におけるセルのグルーピングの例. 衝撃波面に横切られるセルをBlanked cells, その1層外側がAdjoining Boundary, さらに1層外側がSurrogate Boundary. さらに[\ref {subsubsec:boundary}]の諸条件を満たすよう修正する.}}{2}{}\protected@file@percent }
-\newlabel{fig:grouping}{{2}{2}{}{figure.2}{}}
 \newlabel{subsubsec:udflow}{{2.3.2}{2}{}{subsubsection.2.3.2}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.2}上流セル・下流セルの識別}{2}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 上流・下流判定対象セルに対し, 最近傍shock-pointからの相対位置ベクトル(黒)と衝撃波法線(緑)の内積を取る. 左上のセルは内積が正, 右下のセルは負である. 一方が衝撃波上流側, もう一方が下流側と判別できるので, 圧力値を比較し高いほうが下流側である.}}{3}{}\protected@file@percent }
-\newlabel{fig:updownjudge}{{3}{3}{}{figure.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces shock-fitting法におけるセルのグルーピングの例. 衝撃波面に横切られるセルをBlanked cells, その1層外側がAdjoining Boundary, さらに1層外側がSurrogate Boundary. さらに[\ref {subsubsec:boundary}]の諸条件を満たすよう修正する.}}{2}{}\protected@file@percent }
+\newlabel{fig:grouping}{{2}{2}{}{figure.2}{}}
 \newlabel{subsubsec:remove}{{2.3.3}{3}{}{subsubsection.2.3.3}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.3}}{3}{}\protected@file@percent }
 \newlabel{subsubsec:sc}{{2.3.4}{3}{}{subsubsection.2.3.4}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.4}SC法ソルバーによる計算領域でのCFDの実行}{3}{}\protected@file@percent }
 \newlabel{subsubsec:extrapolate}{{2.3.5}{3}{}{subsubsection.2.3.5}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.5}Surrogate Boundary cellsからShock-Pointsへの値の外挿}{3}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 上流・下流判定対象セルに対し, 最近傍shock-pointからの相対位置ベクトル(黒)と衝撃波法線(緑)の内積を取る. 左上のセルは内積が正, 右下のセルは負である. 一方が衝撃波上流側, もう一方が下流側と判別できるので, 圧力値を比較し高いほうが下流側である.}}{3}{}\protected@file@percent }
+\newlabel{fig:updownjudge}{{3}{3}{}{figure.3}{}}
 \newlabel{eq:Riemann_down}{{2}{3}{}{equation.2}{}}
 \newlabel{subsubsec:normal}{{2.3.6}{3}{}{subsubsection.2.3.6}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.6}衝撃波法線ベクトルの計算}{3}{}\protected@file@percent }
@@ -46,22 +46,22 @@
 \@writefile{toc}{\contentsline {section}{\numberline {3.}結果}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}1次元非定常垂直衝撃波}{4}{}\protected@file@percent }
 \newlabel{subsec:1D}{{3.1}{4}{}{subsection.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}2次元定常斜め衝撃波}{4}{}\protected@file@percent }
+\newlabel{subsec:2Ddiag}{{3.2}{4}{}{subsection.3.2}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces 1次元非定常垂直衝撃波の計算領域・設定の概略. 衝撃波は最初に$x=0.5$に存在し, 速度$w=-0.2$で移動する.}}{4}{}\protected@file@percent }
 \newlabel{fig:1Dsituation}{{4}{4}{}{figure.4}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces 上：1次元非定常垂直衝撃波のSC法CFDの結果(青)とSF法の結果(赤)を密度について比較(1500step, t=1.5).\\ 下：衝撃波下流域密度分布の, SC法CFDの結果と理論解との差. }}{4}{}\protected@file@percent }
 \newlabel{fig:1Dscsf}{{5}{4}{}{figure.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}2次元定常斜め衝撃波}{4}{}\protected@file@percent }
-\newlabel{subsec:2Ddiag}{{3.2}{4}{}{subsection.3.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces 2次元定常斜め衝撃波の計算領域・設定の概略. 計算領域左端から, マッハ数$M_\infty =2.5$, 角度$\theta =15^\circ $の均一流を流入する. 下端は滑り壁条件.}}{5}{}\protected@file@percent }
-\newlabel{fig:2Ddiagsituation}{{6}{5}{}{figure.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces 2次元定常斜め衝撃波のSC法, SF法計算結果(密度分布)の解析解との差分. 空白セルは不連続領域. \\ 上：SC法CFDと解析解の差分.衝撃波後流域に数値振動が発生している. \\ 下：SF法と解析解の差分. 数値振動は見られない.}}{5}{}\protected@file@percent }
-\newlabel{fig:2Ddiagcomp}{{7}{5}{}{figure.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces 2次元定常斜め衝撃波の計算領域・設定の概略. 計算領域左端から, マッハ数$M_\infty =2.5$, 角度$\theta =15^\circ $の均一流を流入する. 下端は滑り壁条件.}}{4}{}\protected@file@percent }
+\newlabel{fig:2Ddiagsituation}{{6}{4}{}{figure.6}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}2次元定常角柱離脱衝撃波}{5}{}\protected@file@percent }
 \newlabel{subsec:2Dsq}{{3.3}{5}{}{subsection.3.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces 2次元定常角柱離脱衝撃波の計算領域・設定の概略. 計算領域左端から, マッハ数$M_\infty =4.0$の一様流を流入する. 角柱表面は滑り壁条件.}}{6}{}\protected@file@percent }
-\newlabel{fig:2Dcolumnsitu}{{8}{6}{}{figure.8}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}2次元定常円柱離脱衝撃波}{6}{}\protected@file@percent }
-\newlabel{subsec:2Dcirc}{{3.4}{6}{}{subsection.3.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}2次元定常円柱離脱衝撃波}{5}{}\protected@file@percent }
+\newlabel{subsec:2Dcirc}{{3.4}{5}{}{subsection.3.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces 2次元定常斜め衝撃波のSC法, SF法計算結果(密度分布)の解析解との差分. 空白セルは不連続領域. \\ 上：SC法CFDと解析解の差分.衝撃波後流域に数値振動が発生している. \\ 下：SF法と解析解の差分. 数値振動は見られない.}}{5}{}\protected@file@percent }
+\newlabel{fig:2Ddiagcomp}{{7}{5}{}{figure.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces 2次元定常角柱離脱衝撃波の計算領域・設定の概略. 計算領域左端から, マッハ数$M_\infty =4.0$の一様流を流入する. 角柱表面}}{5}{}\protected@file@percent }
+\newlabel{fig:2Dcolumnsitu}{{8}{5}{}{figure.8}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.}結論}{6}{}\protected@file@percent }
 \newlabel{ref:eDIT}{{1}{6}{}{enumi.1}{}}
 \newlabel{ref:SESF}{{2}{6}{}{enumi.2}{}}

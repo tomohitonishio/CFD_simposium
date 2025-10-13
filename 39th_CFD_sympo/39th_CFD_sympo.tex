@@ -4,6 +4,7 @@
 \usepackage{jcfd39}
 \usepackage{amsmath}
 \usepackage{url}
+\usepackage{placeins}
 %
 %\usepackage{ulem} %proofreading e.g. \uuline{ \uwave{  \sout{demo}}}
 %
@@ -152,7 +153,7 @@ Fig.\ref{fig:extract}-\textcircled{\scriptsize 3}の赤線は不連続領域か�
 ここで, ユーザー任意のサンプリング点数のshock-pointsを任意の滑らかさで用意できる.
 Fig.\ref{fig:extract}-\textcircled{\scriptsize 4}の緑線は, Fig.\ref{fig:extract}-\textcircled{\scriptsize 3}の最長主要骨格(赤線)をspline近似して配置したshock-pointsを示す.
 \vskip\baselineskip
-\begin{figure}[H]
+\begin{figure}[!b]
     \vspace*{-5mm}
     \begin{center}
         \includegraphics[width=0.45\textwidth]{extract.pdf}
@@ -196,7 +197,7 @@ Fig.\ref{fig:grouping}は斜め衝撃波の衝撃波面の周囲で, 実際に�
 に囲まれている.
 
 \vskip\baselineskip
-\begin{figure}[H]
+\begin{figure}[!b]
     \vspace*{-5mm}
     \begin{center}
         \includegraphics[width=0.45\textwidth]{grouping.pdf}
@@ -222,7 +223,7 @@ Fig.\ref{fig:updownjudge}では, 左上のセルは内積が正, 右下のセル
 内積値の符号のみで上流・下流の識別が可能である.
 
 \vskip\baselineskip
-\begin{figure}[H]
+\begin{figure}[!b]
     \vspace*{-5mm}
     \begin{center}
         \includegraphics[width=0.45\textwidth]{updownjudge.pdf}
@@ -331,7 +332,7 @@ Fig.\ref{fig:1Dsituation}に計算領域・設定の概略を示す.
 上流・下流の状態変数はこの条件を成立させるよう, あらかじめR-H条件を解いて与える.
 SC法の計算では, x軸方向に50セルの直交格子を用いる.
 1タイムステップの時間幅は, CFL条件を満たす固定値として設定し, $\Delta t = 0.001$とする.
-\begin{figure}[H]
+\begin{figure}[!b]
     \vspace*{-5mm}
     \begin{center}
         \includegraphics[width=0.4\textwidth]{1Dsituation.pdf}
@@ -351,7 +352,7 @@ SC法CFDでは, 衝撃波が人工粘性により平滑化され, 衝撃波位�
 Fig.\ref{fig:1Dscsf}下図は, 衝撃波下流域の密度分布について, SC法CFDの結果と理論解との差を示している.
 衝撃波前後の密度変化の0.1\%程度の振幅の数値的減衰振動が確認できる.
 \vskip\baselineskip
-\begin{figure}[H]
+\begin{figure}[!b]
     \vspace*{-5mm}
     \begin{center}
         \includegraphics[width=0.45\textwidth]{1Dscsf.pdf}
@@ -371,7 +372,7 @@ Fig.\ref{fig:2Ddiagsituation}に計算領域・設定の概略を示す.
 下端は滑り壁条件である. SC法CFDで1000step計算した後, [\ref{subsec:discon}]のプロセスで衝撃波面を抽出し, SC法, SF法でそれぞれ保存量の残差が$10^{-14}$を下回るまで
 計算を継続する.
 \vskip\baselineskip
-\begin{figure}[H]
+\begin{figure}[!b]
     \vspace*{-5mm}
     \begin{center}
         \includegraphics[width=0.45\textwidth]{2Ddiagsituation.pdf}
@@ -393,7 +394,7 @@ Fig.\ref{fig:2Ddiagcomp}上は, SC法CFDの密度分布と解析解の差を示�
 誤差は衝撃波前後の密度変化の$10^{-10}$のオーダーに抑えられており, 数値振動は見られない.
 
 \vskip\baselineskip
-\begin{figure}[H]
+\begin{figure}[!b]
     \vspace*{-5mm}
     \begin{center}
         \includegraphics[width=0.45\textwidth]{2Ddiagcomp.pdf}
@@ -412,14 +413,14 @@ Fig.\ref{fig:2Dcolumnsitu}に計算領域・設定の概略を示す.
 計算領域左端から, マッハ数$M_\infty=4.0$の一様流を流入する.
 角柱表面は滑り壁条件を貸す. 
 \vskip\baselineskip
-\begin{figure}[H]
+\begin{figure}[!b]
     \vspace*{-5mm}
     \begin{center}
         \includegraphics[width=0.45\textwidth]{2Dcolumnsitu.pdf}
     \end{center}
     \caption{2次元定常角柱離脱衝撃波の計算領域・設定の概略.
     計算領域左端から, マッハ数$M_\infty=4.0$の一様流を流入する.
-    角柱表面は滑り壁条件.}
+    角柱表面}
     \label{fig:2Dcolumnsitu}
 \end{figure}
 
@@ -428,6 +429,7 @@ Fig.\ref{fig:2Dcolumnsitu}に計算領域・設定の概略を示す.
 
 未定
 
+\clearpage
 \section{結論}
 
 \section*{参考文献}
