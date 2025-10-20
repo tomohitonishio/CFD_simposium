@@ -46,13 +46,15 @@ $\bigcirc$ & 西尾朋人，東大,
                                     %アブストラクトを記して下さい
 \abstract{%
 %
-    Abstract must be 100 -- 150 words using 9pt Times font.
-    This is a simple example of how to prepare the paper for CFD39.
-    The headings should appear as above.
-    The instruction is written in the main body.
-    Abstract must be 100 -- 150 words using 9pt Times font.
-    This is a simple example of how to prepare the paper for CFD39.
-    The headings should appear as above. The instruction is written in the main body. 
+    　In computational fluid dynamics (CFD) of supersonic flows, shock-capturing methods smear discontinuities over several cells 
+    due to numerical diffusion, leading to reduced accuracy in post-shock regions. In contrast, the shock-fitting method explicitly represents the shock front 
+    by introducing shock-points and applying the Rankine–Hugoniot conditions, allowing accurate tracking of its position and shape 
+    while minimizing artificial viscosity effects. In this study, the shock-fitting technique was implemented on a Cartesian grid to facilitate its application 
+    to general geometries. Fundamental two-dimensional benchmark problems were analyzed to validate the method’s effectiveness. 
+    Moreover, an automated procedure was developed to extract discontinuous regions from shock-capturing CFD results 
+    and integrate them into the shock-fitting framework. 
+    The proposed approach demonstrates the potential of combining shock detection and explicit front tracking 
+    for accurate and efficient simulation of supersonic flows.
 %
 }
 \begin{document}
@@ -385,15 +387,15 @@ SC法の計算では, x軸方向に50cellsの直交格子を用いる.
     衝撃波は最初に$x=0.5$に存在し, 速度$w=-0.2$で移動する.}
     \label{fig:1Dsituation}
 \end{figure}
-SF法による計算の結果, 衝撃波速さは常に0.20000000298023216という値となった.
+SF法による計算の結果, 衝撃波速さは常に0.20000000298023216となった.
 理論解との差は, \ref{subsubsec:rankine}節でのNewton-Raphson法実行時の収束閾値が由来であった. 
 残差は倍精度の機械イプシロンまで収束していた. また, 流れ場は常に理論解と一致した.
 
-Figure \ref{fig:1Dscsfa}は, SC法の結果(青)とSF法の結果(赤)を密度について比較している(1500step, t=1.5).
-SC法では, 衝撃波が人工粘性により平滑化され, 衝撃波位置が不明確である.
-Figure \ref{fig:1Dscsfb}は, 衝撃波下流域の密度分布について, SC法の結果と理論解との差を示している.
+Figure \ref{fig:1Dscsfa}で, SC法の結果(青)とSF法の結果(赤)を密度について比較する(1500step, t=1.5).
+SC法では, 衝撃波が人工粘性により平滑化され, 衝撃波位置が4セル程度に跨る.
+Figure \ref{fig:1Dscsfb}では, 衝撃波下流域の密度分布について, SC法の結果と理論解との差を示す.
 SC法の結果は衝撃波上流側では理論解と完全に一致するが, 衝撃波下流域では
-数値振動が発生し理論解と差を生じることがわかる.
+数値的減衰振動が発生し, 理論解と差を生じることがわかる.
 \begin{figure}[h]
   \centering
   \includegraphics[width=\linewidth]{1Dscsfa.pdf}
@@ -419,8 +421,8 @@ SC法の結果は衝撃波上流側では理論解と完全に一致するが, �
 2次元定常斜め衝撃波を扱い, 衝撃波面が背景格子に沿わない2次元流れでのSF法の挙動と精度を確認する.
 Figure \ref{fig:2Ddiagsituation}に計算領域・設定の概略を示す.
 計算領域左端から, マッハ数$M_\infty=2.5$, 角度$\theta=15^\circ$の一様流を流入する.
-下端は滑り壁条件である. SC法で1000step計算した後, \ref{subsec:discon}節のプロセスで衝撃波面を抽出し, SC法, SF法でそれぞれ保存量の残差が$10^{-14}$を下回るまで
-計算を継続する. 最も壁に近い左下端のshock-pointでの衝撃波法線計算時(\ref{subsubsec:normal}節)には,
+下端は滑り壁条件である. SC法で1000step計算した後, \ref{subsec:discon}節のプロセスで衝撃波面を抽出する.
+その後, SC法, SF法それぞれで収束するまで計算を継続する. 最も壁に近い左下端のshock-pointでの衝撃波法線計算時(\ref{subsubsec:normal}節)には,
 原点に仮のshock-pointがあるとして, その座標を必要に応じて用いた.
 \begin{figure}[H]
     \begin{center}
@@ -431,7 +433,7 @@ Figure \ref{fig:2Ddiagsituation}に計算領域・設定の概略を示す.
     下端は滑り壁条件.}
     \label{fig:2Ddiagsituation}
 \end{figure}
-Figure \ref{fig:2Ddiagconv}は, SF法で計算された各shock-pointの速さの時間履歴を示す.
+Figure \ref{fig:2Ddiagconv}に, SF法で計算された各shock-pointの速さの時間履歴を示す.
 Figure \ref{fig:2Ddiagsituation}の衝撃波面に配置されたshock-pointsに対し, 
 左下から右上に順に番号を振り, カラーマップで表示した.
 200 stepまでは全てのshock-pointsが振動しているが, やがて斜め衝撃波の壁に近い側(番号の若い側)から速度の収束が始まり,
@@ -448,7 +450,7 @@ Figure \ref{fig:2Ddiagsituation}の衝撃波面に配置されたshock-pointsに
     \label{fig:2Ddiagconv}
 \end{figure}
 Figure \ref{fig:2Ddiagapprox}で, SF法計算結果の最終的なshock-points位置(青点)を示す.
-赤線は, 最小二乗法により推定された衝撃波面の近似直線で, その傾きは$0.402908006$である.
+赤線は, 最小二乗法で推定した衝撃波面の近似直線で, その傾きは$0.402908006$である.
 一方理論解は傾き$0.402908009$であり, その差は$10^{-6}$\%程度に収まっている.
 \begin{figure}[h]
     \centering
@@ -462,8 +464,7 @@ SC法, SF法での計算結果を解析解と比較する.
 圧縮性が顕著なcell(\ref{subsubsec:comp}節)を除いた計算領域で比較を行う.
 Figure \ref{fig:2Ddiagcomp}(a)は, SC法の密度分布と解析解の差を示す.
 衝撃波後流域に数値的減衰振動が発生していることが確認できる.
-誤差は, 衝撃波前後の密度変化の約10\%のオーダーに達している.
-衝撃波面から離れるに従い, 誤差が減少することもわかる.
+振動の振幅は, 衝撃波前後の密度変化の約10\%のオーダーに達している.
 一方, Fig.\ref{fig:2Ddiagcomp}(b)は, SF法の密度分布と解析解の差を示す.
 誤差は衝撃波前後の密度変化の$10^{-10}$のオーダーに抑えられており, 数値振動は見られない.
 \begin{figure}[h]
@@ -488,7 +489,7 @@ Figure \ref{fig:2Ddiagcomp}(a)は, SC法の密度分布と解析解の差を示�
 \mbox{}\\[-3.0ex]
 
 2次元定常円柱離脱衝撃波を解析し, 流れ場の基本変数分布に非一様性があり, 衝撃波面が曲率を持つ場合のSF法の挙動を確認する.
-円柱表面滑り壁条件はIB法を用いて課し, 直交格子ソルバーとSF法の組み合わせの有効性を確認する.
+IB法を用いて円柱表面滑り壁条件を課し, 直交格子ソルバーとSF法の組み合わせの有効性を確認する.
 Figure \ref{fig:2Dcolumnsitu}に計算領域・設定の概略を示す.
 計算領域左端から, マッハ数$M_\infty=2.3$の一様流を流入する.
 \begin{figure}[h]
@@ -497,7 +498,7 @@ Figure \ref{fig:2Dcolumnsitu}に計算領域・設定の概略を示す.
     \end{center}
     \caption{2次元定常円柱離脱衝撃波の計算領域・設定の概略.
     計算領域左端から, マッハ数$M_\infty=2.3$の一様流を流入する.
-    円柱表面はIB法により滑り壁条件を課す.}
+    IB法により円柱表面に滑り壁条件を課す.}
     \label{fig:2Dcolumnsitu}
 \end{figure}
 
@@ -505,7 +506,7 @@ Figure \ref{fig:2Dcolumnsitu}に計算領域・設定の概略を示す.
 定常問題で流入が一様流のため, 全温$T_0$は計算領域全体で保存されているべきであり, この保存誤差を調べることで
 計算手法の格子収束を評価できる. 
 格子サイズ$h_i$, $h_{i+1}$で, 全温$T_0$の保存誤差$L_1$ノルムがそれぞれ$\epsilon_i$, $\epsilon_{i+1}$の時,
-精度次数 $\tilde{n}$は以下の式で計算できる.
+収束次数 $\tilde{n}$は以下の式で計算できる.
 \begin{equation}
   \tilde{n}_{i,i+1} = \frac{\log (\epsilon_i/\epsilon_{i+1})}{\log r}
     \label{eq:order_of_conv}
@@ -514,10 +515,11 @@ Figure \ref{fig:2Dcolumnsitu}に計算領域・設定の概略を示す.
 
 本解析では3段階の格子（粗, 中, 細. それぞれ$i=0,1,2$に対応.）を用い, それぞれSC法, SF法の計算を行う.
 $r=2$で統一した.
-また, $L_1$ノルムを求める際, SC法, SF法両方の計算結果からBlanked cellsを取り除いて比較した.
+また, $L_1$ノルムを求める際, SC法, SF法両方の計算結果からBlanked cellsを取り除いて比較する.
 
-Table\ref{tab:2D_circle_global_error}, Figure\ref{fig:2Dcircle_t_error}はその結果である.
-SF法の方がSC法より$L_1$ノルムが半分程度小さい一方, 収束次数はどちらの方法も1次精度程度に落ちている.
+Table \ref{tab:2D_circle_global_error}, Figure \ref{fig:2Dcircle_t_error}は, 全温$T_0$の保存誤差$L_1$ノルムの
+格子サイズ依存性を示す.
+SF法は$L_1$ノルムがSC法のが半分程度である一方, 収束次数はどちらの方法も1次精度程度に落ちている.
 極座標構造格子で円柱離脱衝撃波を扱った先行研究$^{(\ref{ref:SESF})}$では, 収束次数がSC法では1次精度に落ちる一方, SF法ではソルバー設計精度の2次精度
 に保たれることが報告されており, 今回の結果は先行研究と反する.
 \begin{table}[h]
@@ -549,12 +551,13 @@ SF法の方がSC法より$L_1$ノルムが半分程度小さい一方, 収束次
 格子サイズ$i=1$の時の, 全温$T_0$の保存誤差の分布をFig.\ref{fig:2Dcircle_t_error_distribution}に示す. 
 SC法では, 離脱衝撃波が背景直交格子に沿って階段状に捉えられており, その段差部分から
 全温の非保存が始まり, 衝撃波後流域に伝播していることがわかる.
-SF法では段差部分からの非保存の伝播は見られないものの, 図中黒丸の地点から大きな非保存が発生していることが確認される.
+一方SF法では, 図中黒丸の地点で大きな非保存が発生し, 衝撃波後流に伝播していることが確認される.
 
-Figure\ref{fig:2Dcircle_res1_distribution}でSF法の保存変数$\rho$の残差分布を確認すると, この地点(図中Loc.2)を起点に振動が生じていることがわかる.
-Figure\ref{fig:2Dcircle_speed_conv}は, Loc.0, Loc.1, Loc.2それぞれの場所におけるshock-pointの速さの時間履歴
-を示す. Loc.2の定常振動の振幅が他と比べて10倍程度大きいことがわかる. 
-shock-pointの速さが振動すると, \ref{subsubsec:adjoining}節でAdjoining Boundaryに代入される基本変数値が
+Figure \ref{fig:2Dcircle_res1_distribution}でSF法の保存変数$\rho$の残差分布を確認すると, この地点(図中Loc.2)を起点に振動が生じていることがわかる.
+ここで, 特徴的な3点(Location0:衝撃波末端, Location1:衝撃波垂直部分, Location2:振動発生地点)のshock-pointについて,
+進行速さの時間履歴をFig.\ref{fig:2Dcircle_speed_conv}に示す.
+Loc.2の定常振動の振幅が他と比べて10倍程度大きいことがわかる. 
+shock-pointの進行速さが振動すると, \ref{subsubsec:adjoining}節でAdjoining Boundaryに代入される基本変数値が
 振動し, 衝撃波下流領域は振動する流入を境界条件として与えられてCFDが実行されることになる.
 これが定常振動解に収束したことが, 今回設計精度に近い収束次数を得られなかった原因であると考えられる.
 SC法では計算領域の保存変数残差ノルムが$10^{-15}$程度まで減少した一方, 
@@ -573,7 +576,7 @@ SF法では$10^{-5}$程度で振動した.
         \includegraphics[width=0.35\textwidth]{2Dcirc_res_1.pdf}
     \end{center}
     \caption{SF法計算結果における保存変数$\rho$の残差分布.
-    Figure\ref{fig:2Dcircle_t_error_distribution}黒丸地点(Loc.2)から振動が発生していることが確認できる.}
+    Figure \ref{fig:2Dcircle_t_error_distribution}黒丸地点(Loc.2)から振動が発生していることが確認できる.}
     \label{fig:2Dcircle_res1_distribution}
 \end{figure}
 \begin{figure}[H]
@@ -585,9 +588,23 @@ SF法では$10^{-5}$程度で振動した.
     \label{fig:2Dcircle_speed_conv}
 \end{figure}
 
-
-\section{結論} \label{sec:conclusion}
 \clearpage
+\section{結論} \label{sec:conclusion}
+\mbox{}\\[-3.0ex]
+
+SF法を実装し, 計算精度の評価と課題点の抽出を行った.
+
+1次元非定常垂直衝撃波問題(\ref{subsec:1D}節)では, R-H条件により衝撃波前後の整合性をとることで,
+背景格子位置に依らず衝撃波面を追跡し, 演算誤差を除いて解析解と完全に一致する流れを得られた.
+1次元で初期解が解析解で与えられた場合, SC法では時間発展に伴い数値粘性による不連続の平滑化, 数値振動が発生する一方, 
+SF法ではその質を損なわず時間発展することを確認した.
+
+2次元定常斜め衝撃波問題(\ref{subsec:2Ddiag}節)では, 初期解として与えたSC法計算結果から,
+不連続位置を推定・抽出し, SF法のイタレーションを行うことで解析解を得られた.
+
+2次元定常円柱離脱衝撃波問題(\ref{subsec:2Ddiag}節)では, shock-pointの進行速さ・流れ場が 
+定常振動解におちいり, 収束しない課題が確認された.
+
 \section*{参考文献}
 
 \begin{enumerate}
