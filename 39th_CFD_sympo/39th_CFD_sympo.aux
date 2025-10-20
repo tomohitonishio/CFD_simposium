@@ -16,25 +16,25 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}不連続領域のSkeleton化}{2}{}\protected@file@percent }
 \newlabel{subsubsec:spline}{{2.2.4}{2}{}{subsubsection.2.2.4}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.4}衝撃波面のSpline近似}{2}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces SC法の結果から不連続領域を抽出し初期衝撃波面を推定する手順(\ref {subsec:discon}節).}}{2}{}\protected@file@percent }
-\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:extract}{{1}{2}{}{figure.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Shock-Fitting法}{2}{}\protected@file@percent }
 \newlabel{subsec:SF}{{2.3}{2}{}{subsection.2.3}{}}
 \newlabel{subsubsec:boundary}{{2.3.1}{2}{}{subsubsection.2.3.1}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.1}Blanked cells, Adjoining Boundary cells, Surrogate Boundary cellsのラベリング$^{(\ref {ref:SESF})}$}{2}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Shock-fitting法におけるcellのグルーピングの例. 衝撃波面に横切られるcellをBlanked cells, その1層外側がAdjoining Boundary, さらに1層外側がSurrogate Boundary. さらに\ref {subsubsec:boundary}節の諸条件を満たすよう修正する.}}{3}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces SC法の結果から不連続領域を抽出し初期衝撃波面を推定する手順(\ref {subsec:discon}節).}}{2}{}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:extract}{{1}{2}{}{figure.1}{}}
+\newlabel{subsubsec:sc}{{2.3.2}{2}{}{subsubsection.2.3.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.2}SC法ソルバーによる衝撃波上流・下流領域毎のCFD解析}{2}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Shock-fitting法におけるcellのラベリングの例. 衝撃波面に横切られるcellをBlanked cells, その1層外側がAdjoining Boundary, さらに1層外側がSurrogate Boundary. さらに\ref {subsubsec:boundary}節の諸条件を満たすよう修正する.}}{3}{}\protected@file@percent }
 \newlabel{fig:grouping}{{2}{3}{}{figure.2}{}}
-\newlabel{subsubsec:sc}{{2.3.2}{3}{}{subsubsection.2.3.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.2}SC法ソルバーによる衝撃波上流・下流領域毎のCFD解析}{3}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 上流・下流判定対象cellに対し, 最近傍shock-pointからの相対位置ベクトル(黒)と衝撃波法線(緑)の内積を取る. 左上のcellは内積が正, 右下のcellは負である. 一方が衝撃波上流側, もう一方が下流側と判別できるので, 圧力値を比較し高いほうが下流側である.}}{3}{}\protected@file@percent }
-\newlabel{fig:updownjudge}{{3}{3}{}{figure.3}{}}
 \newlabel{subsubsec:extrapolate}{{2.3.3}{3}{}{subsubsection.2.3.3}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.3}Surrogate Boundary cellsからshock-pointsへの値の外挿}{3}{}\protected@file@percent }
-\newlabel{eq:Riemann_down}{{2}{4}{}{equation.2}{}}
-\newlabel{subsubsec:normal}{{2.3.4}{4}{}{subsubsection.2.3.4}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.4}衝撃波法線ベクトルの計算}{4}{}\protected@file@percent }
-\newlabel{eq:dependence_condition}{{3}{4}{}{equation.3}{}}
+\newlabel{eq:Riemann_down}{{2}{3}{}{equation.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 上流・下流判定対象cellに対し, 最近傍shock-pointからの相対位置ベクトル(黒)と衝撃波法線(緑)の内積を取る. 左上のcellは内積が正, 右下のcellは負である. 一方が衝撃波上流側, もう一方が下流側と判別できるので, 圧力値を比較し高いほうが下流側である.}}{3}{}\protected@file@percent }
+\newlabel{fig:updownjudge}{{3}{3}{}{figure.3}{}}
+\newlabel{subsubsec:normal}{{2.3.4}{3}{}{subsubsection.2.3.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.4}衝撃波法線ベクトルの計算}{3}{}\protected@file@percent }
+\newlabel{eq:dependence_condition}{{3}{3}{}{equation.3}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces 隣接するshock-pointが"影響範囲"に含まれるかの判定. 各shock-pointにおいて, 衝撃波接線方向速度(赤点線)と局所音速(青)をEq.\ref {eq:dependence_condition}で比較, 判定する.}}{4}{}\protected@file@percent }
 \newlabel{fig:shocknormal}{{4}{4}{}{figure.4}{}}
 \newlabel{subsubsec:rankine}{{2.3.5}{4}{}{subsubsection.2.3.5}{}}
@@ -45,53 +45,57 @@
 \@writefile{toc}{\contentsline {section}{\numberline {3.}結果}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}1次元非定常垂直衝撃波}{4}{}\protected@file@percent }
 \newlabel{subsec:1D}{{3.1}{4}{}{subsection.3.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces 1次元非定常垂直衝撃波の計算領域・設定の概略. 衝撃波は最初に$x=0.5$に存在し, 速度$w=-0.2$で移動する.}}{5}{}\protected@file@percent }
-\newlabel{fig:1Dsituation}{{5}{5}{}{figure.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces 1次元非定常垂直衝撃波のSC法, SF法の計算結果の比較.}}{5}{}\protected@file@percent }
-\newlabel{fig:1Dscsf}{{6}{5}{}{figure.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}2次元定常斜め衝撃波}{5}{}\protected@file@percent }
-\newlabel{subsec:2Ddiag}{{3.2}{5}{}{subsection.3.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces 2次元定常斜め衝撃波の計算領域・設定の概略. 計算領域左端から, マッハ数$M_\infty =2.5$, 角度$\theta =15^\circ $の一様流を流入する. 下端は滑り壁条件.}}{6}{}\protected@file@percent }
-\newlabel{fig:2Ddiagsituation}{{7}{6}{}{figure.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces 各Shock-pointの速さの時間履歴. Figure \ref {fig:2Ddiagsituation}の衝撃波面に配置されたshock-pointsに対し, 左下から右上に順に番号を振り, カラーマップで表示.}}{6}{}\protected@file@percent }
-\newlabel{fig:2Ddiagconv}{{8}{6}{}{figure.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces 最終的なshock-points位置(青点)と近似直線(赤線). 決定係数$R^2=1.0$.}}{6}{}\protected@file@percent }
-\newlabel{fig:2Ddiagapprox}{{9}{6}{}{figure.9}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces 2次元定常斜め衝撃波のSC法, SF法計算結果(密度分布)の解析解との差分. 空白cellは不連続領域.}}{7}{}\protected@file@percent }
-\newlabel{fig:2Ddiagcomp}{{10}{7}{}{figure.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}2次元定常円柱離脱衝撃波}{7}{}\protected@file@percent }
-\newlabel{subsec:2Dcirc}{{3.3}{7}{}{subsection.3.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces 2次元定常円柱離脱衝撃波の計算領域・設定の概略. 計算領域左端から, マッハ数$M_\infty =2.3$の一様流を流入する. 円柱表面はIB法により滑り壁条件を課す.}}{7}{}\protected@file@percent }
-\newlabel{fig:2Dcolumnsitu}{{11}{7}{}{figure.11}{}}
-\newlabel{eq:order_of_conv}{{5}{7}{}{equation.5}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces 全温$T_0$の計算領域全体での保存誤差の$L_1$ノルムと格子サイズ$h$の相関.}}{7}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces 全温$T_0$の計算領域全体での保存誤差の$L_1$ノルムと格子サイズ$h$の相関.}}{8}{}\protected@file@percent }
-\newlabel{fig:2Dcircle_t_error}{{12}{8}{}{figure.12}{}}
-\newlabel{eq:n_obs}{{6}{8}{}{equation.6}{}}
-\newlabel{eq:re}{{7}{8}{}{equation.7}{}}
-\newlabel{eq:gci}{{8}{8}{}{equation.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Comparison of post-shock quantities between SESF and SC methods}}{8}{}\protected@file@percent }
-\newlabel{tab:2Dcircle_griconv}{{2}{8}{}{table.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.}結論}{9}{}\protected@file@percent }
-\newlabel{sec:conclusion}{{4.}{9}{}{section.4}{}}
-\newlabel{ref:scsf_conv}{{1}{9}{}{enumi.1}{}}
-\newlabel{ref:osci}{{2}{9}{}{enumi.2}{}}
-\newlabel{ref:plague}{{3}{9}{}{enumi.3}{}}
-\newlabel{ref:posi1}{{4}{9}{}{enumi.4}{}}
-\newlabel{ref:posi2}{{5}{9}{}{enumi.5}{}}
-\newlabel{ref:effdomain}{{6}{9}{}{enumi.6}{}}
-\newlabel{ref:eDIT}{{7}{9}{}{enumi.7}{}}
-\newlabel{ref:SESF}{{8}{9}{}{enumi.8}{}}
-\newlabel{ref:IBM}{{9}{9}{}{enumi.9}{}}
-\newlabel{ref:gg}{{10}{9}{}{enumi.10}{}}
-\newlabel{ref:MUSCL}{{11}{9}{}{enumi.11}{}}
-\newlabel{ref:fuji}{{12}{9}{}{enumi.12}{}}
-\newlabel{ref:SLAU}{{13}{9}{}{enumi.13}{}}
-\newlabel{ref:TVDrk3}{{14}{9}{}{enumi.14}{}}
-\newlabel{ref:CFL}{{15}{9}{}{enumi.15}{}}
-\newlabel{ref:AMR}{{16}{9}{}{enumi.16}{}}
-\newlabel{ref:CCL}{{17}{9}{}{enumi.17}{}}
-\newlabel{ref:skelton}{{18}{9}{}{enumi.18}{}}
-\newlabel{ref:intera}{{19}{9}{}{enumi.19}{}}
-\newlabel{ref:SF}{{20}{9}{}{enumi.20}{}}
-\gdef \@abspage@last{9}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces 1次元非定常垂直衝撃波の計算領域・設定の概略. 衝撃波は最初に$x=0.5$に存在し, 速度$w=-0.2$で移動する.}}{4}{}\protected@file@percent }
+\newlabel{fig:1Dsituation}{{5}{4}{}{figure.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces 1次元非定常垂直衝撃波のSC法の結果(青)とSF法の結果(赤)を密度について比較(1500step, $t=1.5$). }}{4}{}\protected@file@percent }
+\newlabel{fig:1Dscsfa}{{6}{4}{}{figure.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}2次元定常斜め衝撃波}{4}{}\protected@file@percent }
+\newlabel{subsec:2Ddiag}{{3.2}{4}{}{subsection.3.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces 衝撃波下流域密度分布における，SC法の結果と理論解との差. }}{5}{}\protected@file@percent }
+\newlabel{fig:1Dscsfb}{{7}{5}{}{figure.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces 2次元定常斜め衝撃波の計算領域・設定の概略. 計算領域左端から, マッハ数$M_\infty =2.5$, 角度$\theta =15^\circ $の一様流を流入する. 下端は滑り壁条件.}}{5}{}\protected@file@percent }
+\newlabel{fig:2Ddiagsituation}{{8}{5}{}{figure.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces 各Shock-pointの速さの時間履歴. Figure \ref {fig:2Ddiagsituation}の衝撃波面に配置されたshock-pointsに対し, 左下から右上に順に番号を振り, カラーマップで表示.}}{5}{}\protected@file@percent }
+\newlabel{fig:2Ddiagconv}{{9}{5}{}{figure.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces 最終的なshock-points位置(青点)と近似直線(赤線). 決定係数$R^2=1.0$.}}{5}{}\protected@file@percent }
+\newlabel{fig:2Ddiagapprox}{{10}{5}{}{figure.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}2次元定常円柱離脱衝撃波}{5}{}\protected@file@percent }
+\newlabel{subsec:2Dcirc}{{3.3}{5}{}{subsection.3.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces 2次元定常斜め衝撃波のSC法, SF法計算結果(密度分布)の解析解との差分. 空白cellは不連続領域.}}{6}{}\protected@file@percent }
+\newlabel{fig:2Ddiagcomp}{{11}{6}{}{figure.11}{}}
+\newlabel{eq:order_of_conv}{{5}{6}{}{equation.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces 2次元定常円柱離脱衝撃波の計算領域・設定の概略. 計算領域左端から, マッハ数$M_\infty =2.3$の一様流を流入する. 円柱表面はIB法により滑り壁条件を課す.}}{6}{}\protected@file@percent }
+\newlabel{fig:2Dcolumnsitu}{{12}{6}{}{figure.12}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces 全温$T_0$の計算領域全体での保存誤差の$L_1$ノルムと格子サイズ$h$の相関.}}{6}{}\protected@file@percent }
+\newlabel{tab:2D_circle_global_error}{{1}{6}{}{table.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces 全温$T_0$の計算領域全体での保存誤差の$L_1$ノルムと格子サイズ$h$の相関.}}{7}{}\protected@file@percent }
+\newlabel{fig:2Dcircle_t_error}{{13}{7}{}{figure.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Fig\ref {fig:2Dcircle_res1_distribution}のLoc.0, Loc.1, Loc.2におけるshock-pointの速さの時間履歴.}}{7}{}\protected@file@percent }
+\newlabel{fig:2Dcircle_speed_conv}{{16}{7}{}{figure.16}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.}結論}{7}{}\protected@file@percent }
+\newlabel{sec:conclusion}{{4.}{7}{}{section.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces 全温$T_0$の保存誤差の分布. 空白領域はBlanked cellsと円柱.}}{7}{}\protected@file@percent }
+\newlabel{fig:2Dcircle_t_error_distribution}{{14}{7}{}{figure.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces SF法計算結果における保存変数$\rho $の残差分布. Figure\ref {fig:2Dcircle_t_error_distribution}黒丸地点(Loc.2)から振動が発生していることが確認できる.}}{7}{}\protected@file@percent }
+\newlabel{fig:2Dcircle_res1_distribution}{{15}{7}{}{figure.15}{}}
+\newlabel{ref:scsf_conv}{{1}{8}{}{enumi.1}{}}
+\newlabel{ref:osci}{{2}{8}{}{enumi.2}{}}
+\newlabel{ref:plague}{{3}{8}{}{enumi.3}{}}
+\newlabel{ref:posi1}{{4}{8}{}{enumi.4}{}}
+\newlabel{ref:posi2}{{5}{8}{}{enumi.5}{}}
+\newlabel{ref:effdomain}{{6}{8}{}{enumi.6}{}}
+\newlabel{ref:eDIT}{{7}{8}{}{enumi.7}{}}
+\newlabel{ref:SESF}{{8}{8}{}{enumi.8}{}}
+\newlabel{ref:IBM}{{9}{8}{}{enumi.9}{}}
+\newlabel{ref:gg}{{10}{8}{}{enumi.10}{}}
+\newlabel{ref:MUSCL}{{11}{8}{}{enumi.11}{}}
+\newlabel{ref:fuji}{{12}{8}{}{enumi.12}{}}
+\newlabel{ref:SLAU}{{13}{8}{}{enumi.13}{}}
+\newlabel{ref:TVDrk3}{{14}{8}{}{enumi.14}{}}
+\newlabel{ref:CFL}{{15}{8}{}{enumi.15}{}}
+\newlabel{ref:AMR}{{16}{8}{}{enumi.16}{}}
+\newlabel{ref:CCL}{{17}{8}{}{enumi.17}{}}
+\newlabel{ref:skelton}{{18}{8}{}{enumi.18}{}}
+\newlabel{ref:intera}{{19}{8}{}{enumi.19}{}}
+\newlabel{ref:SF}{{20}{8}{}{enumi.20}{}}
+\gdef \@abspage@last{8}

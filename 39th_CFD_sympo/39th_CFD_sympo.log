@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.euc) (TeX Live 2025) (preloaded format=platex 2025.4.1)  19 OCT 2025 17:11
+This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.euc) (TeX Live 2025) (preloaded format=platex 2025.4.1)  20 OCT 2025 16:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -268,14 +268,19 @@ File: extractc.pdf Graphic file (type pdf)
 File: extractd.pdf Graphic file (type pdf)
 <extractd.pdf>
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
 File: grouping.pdf Graphic file (type pdf)
 <grouping.pdf>
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: updownjudge.pdf Graphic file (type pdf)
+<updownjudge.pdf>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
@@ -293,17 +298,21 @@ Overfull \hbox (4.44443pt too wide) has occurred while \output is active
 Overfull \vbox (16.2207pt too high) has occurred while \output is active []
 
  [2]
-File: updownjudge.pdf Graphic file (type pdf)
-<updownjudge.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-
-Underfull \hbox (badness 4634) in paragraph at lines 284--285
+Underfull \hbox (badness 4634) in paragraph at lines 279--280
  \OT1/cmr/bx/n/10 2.3.3 Sur-ro-gate Bound-ary cells \JY1/gt/m/n/10 から \OT1/cmr/bx/n/10 shock-
  []
+
+
+Underfull \hbox (badness 1048) in paragraph at lines 295--302
+[]\JY1/mc/m/n/10 ここで ， $[]$ および $[]$ は下流側 \OT1/cmr/m/n/10 Sur-ro-gate
+ []
+
+
+
+File: shocknormal.pdf Graphic file (type pdf)
+<shocknormal.pdf>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
@@ -321,19 +330,29 @@ Overfull \hbox (4.44443pt too wide) has occurred while \output is active
 Overfull \vbox (16.2207pt too high) has occurred while \output is active []
 
  [3]
-Underfull \hbox (badness 1048) in paragraph at lines 300--307
-[]\JY1/mc/m/n/10 ここで ， $[]$ および $[]$ は下流側 \OT1/cmr/m/n/10 Sur-ro-gate
- []
-
-File: shocknormal.pdf Graphic file (type pdf)
-<shocknormal.pdf>
-
-
 File: 1Dsituation.pdf Graphic file (type pdf)
 <1Dsituation.pdf>
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 388--391
+[]\OT1/cmr/m/n/10 SF \JY1/mc/m/n/10 法による計算の結果\OT1/cmr/m/n/10 , \JY1/mc/m/n/10 衝撃波速さは常に
+ []
+
+
+Underfull \hbox (badness 1552) in paragraph at lines 388--391
+\OT1/cmr/m/n/10 0.20000000298023216 \JY1/mc/m/n/10 という値とな っ た\OT1/cmr/m/n/10 . \JY1/mc/m/n/10 理論解と
+ []
+
+File: 1Dscsfa.pdf Graphic file (type pdf)
+<1Dscsfa.pdf>
+File: 1Dscsfb.pdf Graphic file (type pdf)
+<1Dscsfb.pdf>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: 2Ddiagsituation.pdf Graphic file (type pdf)
+<2Ddiagsituation.pdf>
 
 
 
@@ -350,29 +369,26 @@ Overfull \hbox (4.44443pt too wide) has occurred while \output is active
 Overfull \vbox (16.2207pt too high) has occurred while \output is active []
 
  [4]
-Underfull \hbox (badness 10000) in paragraph at lines 397--400
-[]\OT1/cmr/m/n/10 SF \JY1/mc/m/n/10 法による計算の結果\OT1/cmr/m/n/10 , \JY1/mc/m/n/10 衝撃波速さは常に
+File: 2Ddiagconv.pdf Graphic file (type pdf)
+<2Ddiagconv.pdf>
+
+Overfull \hbox (29.65866pt too wide) in paragraph at lines 444--447
+ []|  [] 
  []
 
-
-Underfull \hbox (badness 1552) in paragraph at lines 397--400
-\OT1/cmr/m/n/10 0.20000000298023216 \JY1/mc/m/n/10 という値とな っ た\OT1/cmr/m/n/10 . \JY1/mc/m/n/10 理論解と
- []
-
-File: 1Dscsfa.pdf Graphic file (type pdf)
-<1Dscsfa.pdf>
-File: 1Dscsfb.pdf Graphic file (type pdf)
-<1Dscsfb.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
+File: shock_point_approx.pdf Graphic file (type pdf)
+<shock_point_approx.pdf>
 
 
+File: 2Ddiagcompa.pdf Graphic file (type pdf)
+<2Ddiagcompa.pdf>
+File: 2Ddiagcompb.pdf Graphic file (type pdf)
+<2Ddiagcompb.pdf>
 
-File: 2Ddiagsituation.pdf Graphic file (type pdf)
-<2Ddiagsituation.pdf>
+LaTeX Warning: `h' float specifier changed to `ht'.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
+File: 2Dcolumnsitu.pdf Graphic file (type pdf)
+<2Dcolumnsitu.pdf>
 
 
 
@@ -389,26 +405,20 @@ Overfull \hbox (4.44443pt too wide) has occurred while \output is active
 Overfull \vbox (16.2207pt too high) has occurred while \output is active []
 
  [5]
-File: 2Ddiagconv.pdf Graphic file (type pdf)
-<2Ddiagconv.pdf>
 
-Overfull \hbox (29.65866pt too wide) in paragraph at lines 458--461
- []|  [] 
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Overfull \hbox (6.06305pt too wide) in paragraph at lines 526--539
+ [][][][] 
  []
 
-File: shock_point_approx.pdf Graphic file (type pdf)
-<shock_point_approx.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
+File: 2Dcircle_t_error.pdf Graphic file (type pdf)
+<2Dcircle_t_error.pdf>
 
-File: 2Ddiagcompa.pdf Graphic file (type pdf)
-<2Ddiagcompa.pdf>
-File: 2Ddiagcompb.pdf Graphic file (type pdf)
-<2Ddiagcompb.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
@@ -426,40 +436,23 @@ Overfull \hbox (4.44443pt too wide) has occurred while \output is active
 Overfull \vbox (16.2207pt too high) has occurred while \output is active []
 
  [6]
-File: 2Dcolumnsitu.pdf Graphic file (type pdf)
-<2Dcolumnsitu.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
+File: t_error_distribution.pdf Graphic file (type pdf)
+<t_error_distribution.pdf>
 
 
+LaTeX Warning: `h' float specifier changed to `ht'.
 
+File: 2Dcirc_res_1.pdf Graphic file (type pdf)
+<2Dcirc_res_1.pdf>
 
-Overfull \hbox (28.84085pt too wide) in paragraph at lines 542--554
- [][][][] 
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: 2Dcirc_shock_speed_conv.pdf Graphic file (type pdf)
+<2Dcirc_shock_speed_conv.pdf>
+
+Overfull \hbox (25.05875pt too wide) in paragraph at lines 581--583
+ |  [] 
  []
-
-File: 2Dcircle_t_error.pdf Graphic file (type pdf)
-<2Dcircle_t_error.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-
-Overfull \hbox (4.44443pt too wide) has occurred while \output is active
- [] 
- []
-
-
-Overfull \vbox (16.2207pt too high) has occurred while \output is active []
-
- [7]
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
@@ -478,43 +471,43 @@ Overfull \hbox (4.44443pt too wide) has occurred while \output is active
 
 Overfull \vbox (16.2207pt too high) has occurred while \output is active []
 
- [8]
-Underfull \hbox (badness 1033) in paragraph at lines 626--629
+ [7]
+Underfull \hbox (badness 1033) in paragraph at lines 594--597
 []\OT1/cmr/m/n/10 Bonfiglioli, A. and Pa-ciorri, R., ``Con-ver-gence
  []
 
 
-Underfull \hbox (badness 3503) in paragraph at lines 638--641
+Underfull \hbox (badness 3503) in paragraph at lines 606--609
 []\OT1/cmr/m/n/10 Carpenter, M.H. and Casper, J.H., ``Ac-cu-
  []
 
 
-Underfull \hbox (badness 1484) in paragraph at lines 638--641
+Underfull \hbox (badness 1484) in paragraph at lines 606--609
 \OT1/cmr/m/n/10 racy of Shock Cap-tur-ing in Two Spa-tial Di-
  []
 
 
-Underfull \hbox (badness 1939) in paragraph at lines 642--645
+Underfull \hbox (badness 1939) in paragraph at lines 610--613
 []\OT1/cmr/m/n/10 Zaide, D. and Roe, P.L., ``Shock Cap-tur-ing
  []
 
 
-Underfull \hbox (badness 7397) in paragraph at lines 662--665
+Underfull \hbox (badness 7397) in paragraph at lines 630--633
 []\OT1/cmr/m/n/10 Shima, E., Ki-ta-mura, K. and Haga, T.,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 662--665
+Underfull \hbox (badness 10000) in paragraph at lines 630--633
 \OT1/cmr/m/n/10 ``Green{Gauss/Weighted-Least-Squares Hy-brid
  []
 
 
-Underfull \hbox (badness 3281) in paragraph at lines 662--665
+Underfull \hbox (badness 3281) in paragraph at lines 630--633
 \OT1/cmr/m/n/10 Un-struc-tured Grids,'' AIAA Jour-nal, Vol.51,
  []
 
 
-Underfull \hbox (badness 1092) in paragraph at lines 681--684
+Underfull \hbox (badness 1092) in paragraph at lines 649--652
 \OT1/cmr/m/n/10 In-ter-ac-tion of a Shock Wave with a Lam-i-nar
  []
 
@@ -535,7 +528,7 @@ Overfull \hbox (4.44443pt too wide) has occurred while \output is active
 
 Overfull \vbox (16.2207pt too high) has occurred while \output is active []
 
- [9
+ [8
 
 ] (./39th_CFD_sympo.aux)
  ***********
@@ -545,12 +538,12 @@ L3 programming layer <2025-01-18>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 3824 strings out of 473836
- 64900 string characters out of 5731190
- 477045 words of memory out of 5000000
- 27014 multiletter control sequences out of 15000+600000
+ 3845 strings out of 473836
+ 65630 string characters out of 5731190
+ 478069 words of memory out of 5000000
+ 27029 multiletter control sequences out of 15000+600000
  574771 words of font info for 97 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 67i,16n,77p,439b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 67i,15n,77p,439b,613s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on 39th_CFD_sympo.dvi (9 pages, 58188 bytes).
+Output written on 39th_CFD_sympo.dvi (8 pages, 58472 bytes).
