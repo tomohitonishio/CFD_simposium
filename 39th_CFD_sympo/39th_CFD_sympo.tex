@@ -43,20 +43,21 @@ $\bigcirc$ & 西尾朋人，東大,
     7-3-1 Hongo, Bunkyo-ku, Tokyo, Japan
 \end{tabular} }
 
+
+
                                     %アブストラクトを記して下さい
+
 \abstract{%
 %
-    　In computational fluid dynamics (CFD) of supersonic flows, shock-capturing methods smear discontinuities over several cells 
-    due to numerical diffusion, leading to reduced accuracy in post-shock regions. In contrast, the shock-fitting method explicitly represents the shock front 
-    by introducing shock-points and applying the Rankine–Hugoniot conditions, allowing accurate tracking of its position and shape 
-    while minimizing artificial viscosity effects. In this study, the shock-fitting technique was implemented on a Cartesian grid to facilitate its application 
-    to general geometries. Fundamental two-dimensional benchmark problems were analyzed to validate the method’s effectiveness. 
-    Moreover, an automated procedure was developed to extract discontinuous regions from shock-capturing CFD results 
-    and integrate them into the shock-fitting framework. 
-    The proposed approach demonstrates the potential of combining shock detection and explicit front tracking 
-    for accurate and efficient simulation of supersonic flows.
+    　In computational fluid dynamics (CFD) of supersonic flows, shock-capturing methods smear discontinuities over several cells due to numerical diffusion, leading to reduced accuracy in post-shock regions. 
+In contrast, the shock-fitting method explicitly represents the shock front by introducing shock-points and applying the Rankine--Hugoniot conditions, allowing accurate tracking of its position and shape while minimizing artificial viscosity effects. 
+In this study, the shock-fitting technique was implemented on a Cartesian grid to facilitate its application to general geometries. 
+Fundamental one- and two-dimensional benchmark problems were analyzed to validate the method’s accuracy. 
+The proposed approach achieved second-order accuracy except near immersed boundaries and reproduced analytical solutions with minimal error. 
+However, slight deviations in the predicted shock standoff distance were observed, suggesting that the treatment of wall boundaries in the immersed boundary framework requires further refinement.
 %
 }
+
 \begin{document}
 \baselineskip=1zw
 \maketitle
@@ -393,9 +394,10 @@ SF法による計算の結果, 衝撃波速さは常に0.20000000298023216とな
 
 Figure \ref{fig:1Dscsfa}で, SC法の結果(青)とSF法の結果(赤)を密度について比較する(1500step, t=1.5).
 SC法では, 衝撃波が人工粘性により平滑化され, 衝撃波位置が4セル程度に跨る.
-Figure \ref{fig:1Dscsfb}では, 衝撃波下流域の密度分布について, SC法の結果と理論解との差を示す.
-SC法の結果は衝撃波上流側では理論解と完全に一致するが, 衝撃波下流域では
-数値的減衰振動が発生し, 理論解と差を生じることがわかる.
+衝撃波上流側では理論解と完全に一致するが, 衝撃波下流領域では差が生じる.
+Figure \ref{fig:1Dscsfb}では, 衝撃波下流域の密度分布について, SC法, SF法の結果と理論解との差を示す.
+SC法の衝撃波下流域では数値的減衰振動が発生することがわかる.
+振幅は衝撃波前後の密度変化の0.3\%程度である.
 \begin{figure}[h]
   \centering
   \includegraphics[width=\linewidth]{1Dscsfa.pdf}
@@ -463,7 +465,7 @@ SC法, SF法での計算結果を解析解と比較する.
 衝撃波の不連続が存在する領域は, SC法では正確に表現できないことが明らかであるため,
 圧縮性が顕著なcell(\ref{subsubsec:comp}節)を除いた計算領域で比較を行う.
 Figure \ref{fig:2Ddiagcomp}(a)は, SC法の密度分布と解析解の差を示す.
-衝撃波後流域に数値的減衰振動が発生していることが確認できる.
+衝撃波後流域に斜め衝撃波に平行に数値的減衰振動が発生していることが確認できる.
 振動の振幅は, 衝撃波前後の密度変化の約10\%のオーダーに達している.
 一方, Fig.\ref{fig:2Ddiagcomp}(b)は, SF法の密度分布と解析解の差を示す.
 誤差は衝撃波前後の密度変化の$10^{-10}$のオーダーに抑えられており, 数値振動は見られない.
@@ -505,7 +507,7 @@ Figure \ref{fig:2Dcolumnsitu}に計算領域・設定の概略を示す.
 計算結果から, 全温$T_0$の計算領域全体での保存誤差を求める.
 定常問題で流入が一様流のため, 全温$T_0$は計算領域全体で保存されているべきであり, この保存誤差を調べることで
 計算手法の格子収束を評価できる. 
-格子サイズ$h_i$, $h_{i+1}$で, 全温$T_0$の保存誤差$L_1$ノルムがそれぞれ$\epsilon_i$, $\epsilon_{i+1}$の時,
+格子サイズ$h_i$, $h_{i+1}$で, 全温$T_0$の保存誤差$L_1$ノルム平均がそれぞれ$\epsilon_i$, $\epsilon_{i+1}$の時,
 収束次数 $\tilde{n}$は以下の式で計算できる.
 \begin{equation}
   \tilde{n}_{i,i+1} = \frac{\log (\epsilon_i/\epsilon_{i+1})}{\log r}
@@ -515,16 +517,19 @@ Figure \ref{fig:2Dcolumnsitu}に計算領域・設定の概略を示す.
 
 本解析では3段階の格子（粗, 中, 細. それぞれ$i=0,1,2$に対応.）を用い, それぞれSC法, SF法の計算を行う.
 $r=2$で統一した.
-また, $L_1$ノルムを求める際, SC法, SF法両方の計算結果からBlanked cellsを取り除いて比較する.
+また, $L_1$ノルム平均を求める際, SC法, SF法両方の計算結果からBlanked cellsを取り除いて比較する.
 
-Table \ref{tab:2D_circle_global_error}, Figure \ref{fig:2Dcircle_t_error}は, 全温$T_0$の保存誤差$L_1$ノルムの
-格子サイズ依存性を示す.
-SF法は$L_1$ノルムがSC法のが半分程度である一方, 収束次数はどちらの方法も1次精度程度に落ちている.
-極座標構造格子で円柱離脱衝撃波を扱った先行研究$^{(\ref{ref:SESF})}$では, 収束次数がSC法では1次精度に落ちる一方, SF法ではソルバー設計精度の2次精度
-に保たれることが報告されており, 今回の結果は先行研究と反する.
+Table \ref{tab:2D_circle_global_error}は, 全温$T_0$の保存誤差$L_1$ノルムの
+格子サイズ依存性を示す. いずれの格子サイズでも, SF法の保存誤差がSC法より小さいことがわかる.
+収束次数$\tilde{n}$は, SF法では設計精度の2次を下回り平均1.74, 一方のSC法では平均0.37である.
+円柱離脱衝撃波を極座標構造格子SF法で解析した先行研究$^{(\ref{ref:SESF})}$では,
+SF法が1.9次精度ほどの収束次数を保つ一方, SC法は0.9次精度ほどに落ちる, と報告されている.
+Table \ref{tab:2D_circle_global_error}の結果は, 収束次数がSF法, SC法の両方で
+さらに低下している.
+
 \begin{table}[h]
   \centering
-  \caption{全温$T_0$の計算領域全体での保存誤差の$L_1$ノルムと格子サイズ$h$の相関.}
+  \caption{全温$T_0$の計算領域全体での保存誤差の$L_1$ノルム平均と格子サイズ$h$の相関.}
   \begin{tabular}{cccccc}
     \toprule
     \multirow{2}{*}{Grid} & \multirow{2}{*}{$h$}
@@ -532,36 +537,22 @@ SF法は$L_1$ノルムがSC法のが半分程度である一方, 収束次数は
     \cmidrule(lr){3-4} \cmidrule(lr){5-6}
     & & $L_1$ & $\tilde{n}$ & $L_1$ & $\tilde{n}$ \\
     \midrule
-    0 & 0.0781 & $2.10 \cdot 10^{-2}$ & –    & $3.77 \cdot 10^{-2}$ & – \\
-    1 & 0.0391 & $8.07 \cdot 10^{-3}$ & 1.38 & $1.98 \cdot 10^{-2}$ & 0.94 \\
-    2 & 0.0195 & $4.62 \cdot 10^{-3}$ & 0.80 & $1.03 \cdot 10^{-2}$ & 0.93 \\
+    0 & 0.0781 & $5.34 \cdot 10^{-4}$ & –    & $8.96 \cdot 10^{-4}$ & – \\
+    1 & 0.0391 & $1.46 \cdot 10^{-4}$ & 1.87 & $6.97 \cdot 10^{-4}$ & 0.361 \\
+    2 & 0.0195 & $4.79 \cdot 10^{-5}$ & 1.61 & $5.40 \cdot 10^{-2}$ & 0.369 \\
     \bottomrule
   \end{tabular} 
   \label{tab:2D_circle_global_error}
 \end{table}
 
-\begin{figure}[h]
-    \begin{center}
-        \includegraphics[width=0.45\textwidth]{2Dcircle_t_error.pdf}
-    \end{center}
-    \caption{全温$T_0$の計算領域全体での保存誤差の$L_1$ノルムと格子サイズ$h$の相関.}
-    \label{fig:2Dcircle_t_error}
-\end{figure}
-
-格子サイズ$i=1$の時の, 全温$T_0$の保存誤差の分布をFig.\ref{fig:2Dcircle_t_error_distribution}に示す. 
-SC法では, 離脱衝撃波が背景直交格子に沿って階段状に捉えられており, その段差部分から
-全温の非保存が始まり, 衝撃波後流域に伝播していることがわかる.
-一方SF法では, 図中黒丸の地点で大きな非保存が発生し, 衝撃波後流に伝播していることが確認される.
-
-Figure \ref{fig:2Dcircle_res1_distribution}でSF法の保存変数$\rho$の残差分布を確認すると, この地点(図中Loc.2)を起点に振動が生じていることがわかる.
-ここで, 特徴的な3点(Location0:衝撃波末端, Location1:衝撃波垂直部分, Location2:振動発生地点)のshock-pointについて,
-進行速さの時間履歴をFig.\ref{fig:2Dcircle_speed_conv}に示す.
-Loc.2の定常振動の振幅が他と比べて10倍程度大きいことがわかる. 
-shock-pointの進行速さが振動すると, \ref{subsubsec:adjoining}節でAdjoining Boundaryに代入される基本変数値が
-振動し, 衝撃波下流領域は振動する流入を境界条件として与えられてCFDが実行されることになる.
-これが定常振動解に収束したことが, 今回設計精度に近い収束次数を得られなかった原因であると考えられる.
-SC法では計算領域の保存変数残差ノルムが$10^{-15}$程度まで減少した一方, 
-SF法では$10^{-5}$程度で振動した.
+Figure\ref{fig:2Dcircle_t_error_distribution}は, SC法とSF法の全温$T_0$の保存誤差の分布を示す.
+SC法では顕著な衝撃波後流領域の保存誤差が, SF法では消えていることがわかる.
+一方, IB法は保存則を満たさないため, 円柱壁面境界セル部分ではSC法, SF法ともに
+大きく誤差が残っていることがわかる.
+この部分で誤差のオーダーが大きく, $L_1$ノルム平均への寄与が大きい. 
+誤差が$\pm 2$標準偏差から外れるセルを取り除いて収束次数 $\tilde{n}$を計算すると,
+Tab.\ref{tab:2D_circle_global_error_arranged}を得る.
+SF法で収束次数がソルバー設計精度の2次近くまで回復していることがわかる. 
 
 \begin{figure}[h]
     \begin{center}
@@ -571,41 +562,109 @@ SF法では$10^{-5}$程度で振動した.
     \label{fig:2Dcircle_t_error_distribution}
 \end{figure}
 
+\begin{table}[h]
+  \centering
+  \caption{全温$T_0$の計算領域全体での保存誤差の$L_1$ノルム平均と格子サイズ$h$の相関.壁面境界のIB法による影響を除く.}
+  \begin{tabular}{cccccc}
+    \toprule
+    \multirow{2}{*}{Grid} & \multirow{2}{*}{$h$}
+    & \multicolumn{2}{c}{SF} & \multicolumn{2}{c}{SC} \\
+    \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+    & & $L_1$ & $\tilde{n}$ & $L_1$ & $\tilde{n}$ \\
+    \midrule
+    0 & 0.0781 & $3.63 \cdot 10^{-4}$ & –    & $5.96 \cdot 10^{-4}$ & – \\
+    1 & 0.0391 & $9.28 \cdot 10^{-4}$ & 1.97 & $4.50 \cdot 10^{-4}$ & 0.405 \\
+    2 & 0.0195 & $2.36 \cdot 10^{-5}$ & 1.98 & $2.95 \cdot 10^{-2}$ & 0.611 \\
+    \bottomrule
+  \end{tabular} 
+  \label{tab:2D_circle_global_error_arranged}
+\end{table}
+
+% \begin{figure}[h]
+%     \begin{center}
+%         \includegraphics[width=0.45\textwidth]{2Dcircle_t_error.pdf}
+%     \end{center}
+%     \caption{全温$T_0$の計算領域全体での保存誤差の$L_1$ノルム平均と格子サイズ$h$の相関.
+%     破線は$\pm 2$標準偏差から外れるデータを除いて計算したもの.}
+%     \label{fig:2Dcircle_t_error}
+% \end{figure}
+
+続いて, 衝撃波の収束位置についての比較を行う.
+Figure\ref{fig:2Dcolumnsitu}のx軸上のcellに対し, 密度分布を取り出して
+SC法, SF法の比較を行う.
+Figure\ref{fig:2Dcircle_shockposi}ではさらに, 修正Newton理論を用いる衝撃波位置の
+近似理論値$^{(\ref{ref:SinclairCui})}$を併記している. この手法は,
+主流マッハ数$M_\infty = 1.35 \sim 6$で良い近似を与えると報告されている.
+
+SC法では, どの格子サイズにおいても4cellsにわたって不連続が平滑化されている.
+SF法の衝撃波位置は, どの格子サイズの結果においてもその平滑化領域中に収束している.
+一方で, 各格子サイズごとに比較すると衝撃波収束位置は異なっており,
+円柱半径の5\%程度のズレを持って収束している.
+これは, 非構造格子SF法で衝撃波位置は格子サイズに依存しない, とする先行研究結果$^{(\ref{ref:effdomain})}$に反する.
+また, どの格子サイズにおける衝撃波収束位置も, 理論近似解とは円柱半径の10\%程度の差がある.
+
 \begin{figure}[h]
     \begin{center}
-        \includegraphics[width=0.35\textwidth]{2Dcirc_res_1.pdf}
+        \includegraphics[width=0.5\textwidth]{2Dcircle_shockposi_comp.pdf}
     \end{center}
-    \caption{SF法計算結果における保存変数$\rho$の残差分布.
-    Figure \ref{fig:2Dcircle_t_error_distribution}黒丸地点(Loc.2)から振動が発生していることが確認できる.}
-    \label{fig:2Dcircle_res1_distribution}
-\end{figure}
-\begin{figure}[H]
-    \begin{center}
-    \hspace*{-15mm} % ← 左にシフト
-        \includegraphics[width=0.6\textwidth]{2Dcirc_shock_speed_conv.pdf}
-    \end{center}
-    \caption{Fig\ref{fig:2Dcircle_res1_distribution}のLoc.0, Loc.1, Loc.2におけるshock-pointの速さの時間履歴.}
-    \label{fig:2Dcircle_speed_conv}
+    \caption{x軸上の密度分布と衝撃波位置の比較. $i$は格子サイズ. 黒波線は近似理論値$^{(\ref{ref:SinclairCui})}$}
+    \label{fig:2Dcircle_shockposi}
 \end{figure}
 
-\clearpage
+ここで, 今回用いたIB法の概略をFig.\ref{fig:IBsitu}に示す. Image pointから壁面までの法線方向速度を線形近似し,
+face centerに数値流束を課すことで, 滑り壁条件を課している.
+この時, 壁面からImage pointまで伸ばす法線の長さ$d_{IP}$について, 
+次元$n_{dim}$の直交格子ではEq.\ref{eq:dip}が満たされる必要がある.
+\begin{equation}
+    d_{IP} > \sqrt{n_{dim}} \cdot \text{max} (\Delta x_{i}) \quad (i = 1, 2, \dots n_{dim})
+    \label{eq:dip}
+\end{equation}
+本研究では, 経験的に$d_{IP} = 3 \Delta x$としている.
+ここに格子サイズ依存性がある. 
+この長さ$d_{IP}$の区間における, 
+IB法で近似した線形速度プロファイルと実際の壁面近傍速度プロファイルの
+差が, 格子サイズによる衝撃波収束位置の差につながっている可能性がある.
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{IBsitu.pdf}
+    \end{center}
+    \caption{IB法の概要図. Image Point(赤三角)から壁面にかけて, 法線方向速度を線形近似して壁面で0とする.
+    Image Pointの密度, 圧力, 物体接線方向速度はこの間で一定とする. こうしてFace Centerの基本変数を決定し, 
+    数値流束を計算してFace centerに課す.}
+    \label{fig:IBsitu}
+\end{figure}
+
 \section{結論} \label{sec:conclusion}
 \mbox{}\\[-3.0ex]
 
-SF法を実装し, 計算精度の評価と課題点の抽出を行った.
+SF法を直交格子上に実装し, 計算精度の評価と課題点の抽出を行った.
 
 1次元非定常垂直衝撃波問題(\ref{subsec:1D}節)では, R-H条件により衝撃波前後の整合性をとることで,
-背景格子位置に依らず衝撃波面を追跡し, 演算誤差を除いて解析解と完全に一致する流れを得られた.
+背景格子位置に依らず衝撃波を追跡し, 演算誤差を除いて解析解と完全に一致する流れを得られた.
 1次元で初期解が解析解で与えられた場合, SC法では時間発展に伴い数値粘性による不連続の平滑化, 数値振動が発生する一方, 
 SF法ではその質を損なわず時間発展することを確認した.
 
-2次元定常斜め衝撃波問題(\ref{subsec:2Ddiag}節)では, 初期解として与えたSC法計算結果から,
-不連続位置を推定・抽出し, SF法のイタレーションを行うことで解析解を得られた.
+2次元定常斜め衝撃波問題(\ref{subsec:2Ddiag}節)では, 初期解として与えたSC法結果から,
+不連続位置を自動で推定・抽出し, SF法のイタレーションを行うことで解析解を得られた.
 
-2次元定常円柱離脱衝撃波問題(\ref{subsec:2Ddiag}節)では, shock-pointの進行速さ・流れ場が 
-定常振動解におちいり, 収束しない課題が確認された.
+2次元定常円柱離脱衝撃波問題(\ref{subsec:2Ddiag}節)では, 基本変数場が非一様で, 衝撃波面が曲率を持つ
+流れ場で, SF法のアルゴリズムが正確に機能することを確かめた. 
 
+流れ場全体の全温$T_0$の保存誤差解析では, 保存誤差の$L_1$ノルム平均を3つの異なる格子幅で計算した.
+SF法では, IB法を課す物体境界付近cellsを除いて設計精度の2次精度が保たれる一方, SC法では収束次数が1次精度を下回った.
+物体境界付近cellsを考慮しても, SF法ではSC法よりも良い収束次数が得られた.
+
+最後に, SF法の3つの異なる格子幅に対し, 衝撃波収束位置の比較を行った.
+非構造格子SF法を扱った先行研究$^{(\ref{ref:effdomain})}$では, SF法の格子幅は
+衝撃波収束位置に影響しない, とされていたが, 本研究では円柱半径の5\%程度のずれを持って収束する結果となった.
+SC法結果から読み取るおよその衝撃波位置も同様の傾向のズレを持ち, 
+これは物体境界を擬似的に扱うIB法と組み合わせたことによる影響と考えられる.
+直交格子を用いる場合, 衝撃波位置を正確に捉えられるというSF法の利点を活かす上で, 
+IB法による壁面境界条件の与え方に課題を残した. 
+\vskip\baselineskip
 \section*{参考文献}
+\mbox{}\\[-3.0ex]
 
 \begin{enumerate}
   \item Bonfiglioli, A. and Paciorri, R., ``Convergence Analysis of Shock-Capturing and Shock-Fitting Solutions on Unstructured Grids,'' 
@@ -686,6 +745,11 @@ SF法ではその質を損なわず時間発展することを確認した.
   \item Assonitis, A., Paciorri, R., Ciallella, M., Ricchiuto, M. and Bonfiglioli, A., ``Extrapolated Shock Fitting for Two-Dimensional Flows on Structured Grids,'' 
   AIAA Journal, Vol.\,60, No.\,11 (2022), pp.\,6301--6312.
   \label{ref:SF}
+
+  \item Sinclair, J. and Cui, X., ``A theoretical approximation of the shock standoff distance for supersonic flows around a circular cylinder,'' 
+  *Physics of Fluids*, Vol.\,29, No.\,2 (2017), 026102.
+  \label{ref:SinclairCui}
+
 \end{enumerate}
 
 
